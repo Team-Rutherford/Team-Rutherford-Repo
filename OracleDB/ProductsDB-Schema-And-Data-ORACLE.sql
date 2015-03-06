@@ -1,6 +1,12 @@
 /* CLEAR CACHE */
 alter system flush shared_pool;
 
+/* VIEW SERVER HOST NAME */
+select host_name from v$instance;
+
+/* CHECK CURREN SID (session ID) */
+select sys_context('userenv','sessionid') Session_ID from dual;
+
 /* VENDORS TABLE CREATION */ ------------------------------------------------------------------------------
 CREATE TABLE VENDORS 
 (
@@ -187,4 +193,5 @@ INSERT INTO PRODUCTS (VENDORID,PRODUCTNAME,MEASUREID,PRICE)
 VALUES(5,'Beer "Diana"',1,1.40);
 INSERT INTO PRODUCTS (VENDORID,PRODUCTNAME,MEASUREID,PRICE) 
 VALUES(5,'Beer "Caltenberg"',1,1.80);
+
 

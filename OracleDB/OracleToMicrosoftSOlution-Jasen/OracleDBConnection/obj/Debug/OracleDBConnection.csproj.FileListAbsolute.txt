@@ -1,0 +1,12 @@
+c:\users\jazzy\documents\visual studio 2013\Projects\Teamwork-DB\OracleDBConnection\bin\Debug\OracleDBConnection.exe.config
+C:\Users\Jazzy\documents\visual studio 2013\Projects\Teamwork-DB\OracleDBConnection\bin\Debug\OracleDBConnection.exe
+C:\Users\Jazzy\documents\visual studio 2013\Projects\Teamwork-DB\OracleDBConnection\bin\Debug\OracleDBConnection.pdb
+C:\Users\Jazzy\documents\visual studio 2013\Projects\Teamwork-DB\OracleDBConnection\bin\Debug\EntityFramework.dll
+C:\Users\Jazzy\documents\visual studio 2013\Projects\Teamwork-DB\OracleDBConnection\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Jazzy\documents\visual studio 2013\Projects\Teamwork-DB\OracleDBConnection\bin\Debug\Oracle.ManagedDataAccess.dll
+C:\Users\Jazzy\documents\visual studio 2013\Projects\Teamwork-DB\OracleDBConnection\bin\Debug\Oracle.ManagedDataAccess.EntityFramework.dll
+C:\Users\Jazzy\documents\visual studio 2013\Projects\Teamwork-DB\OracleDBConnection\bin\Debug\EntityFramework.xml
+C:\Users\Jazzy\documents\visual studio 2013\Projects\Teamwork-DB\OracleDBConnection\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Jazzy\documents\visual studio 2013\Projects\Teamwork-DB\OracleDBConnection\obj\Debug\OracleDBConnection.exe
+C:\Users\Jazzy\documents\visual studio 2013\Projects\Teamwork-DB\OracleDBConnection\obj\Debug\OracleDBConnection.pdb
+C:\Users\Jazzy\Documents\Visual Studio 2013\Projects\Teamwork-DB\OracleDBConnection\obj\Debug\OracleDBConnection.csprojResolveAssemblyReference.cache

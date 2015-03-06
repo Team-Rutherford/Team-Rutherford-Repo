@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MarketDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="MarketDBContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="MEASURES" EntityType="MarketDBModel.MEASURE" />
+    <EntitySet Name="PRODUCTS" EntityType="MarketDBModel.PRODUCT" />
+    <EntitySet Name="sysdiagrams" EntityType="MarketDBModel.sysdiagram" />
+    <EntitySet Name="VENDORS" EntityType="MarketDBModel.VENDOR" />
+    <AssociationSet Name="FK_PRODUCTS_MEASURES" Association="MarketDBModel.FK_PRODUCTS_MEASURES">
+      <End Role="MEASURE" EntitySet="MEASURES" />
+      <End Role="PRODUCT" EntitySet="PRODUCTS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PRODUCTS_VENDORS" Association="MarketDBModel.FK_PRODUCTS_VENDORS">
+      <End Role="VENDOR" EntitySet="VENDORS" />
+      <End Role="PRODUCT" EntitySet="PRODUCTS" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="MEASURE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MEASURESNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PRODUCTS" Relationship="MarketDBModel.FK_PRODUCTS_MEASURES" FromRole="MEASURE" ToRole="PRODUCT" />
+  </EntityType>
+  <EntityType Name="PRODUCT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VENDORID" Type="Int32" />
+    <Property Name="PRODUCTNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="MEASUREID" Type="Int32" />
+    <Property Name="PRICE" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="MEASURE" Relationship="MarketDBModel.FK_PRODUCTS_MEASURES" FromRole="PRODUCT" ToRole="MEASURE" />
+    <NavigationProperty Name="VENDOR" Relationship="MarketDBModel.FK_PRODUCTS_VENDORS" FromRole="PRODUCT" ToRole="VENDOR" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="VENDOR">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VENDORNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PRODUCTS" Relationship="MarketDBModel.FK_PRODUCTS_VENDORS" FromRole="VENDOR" ToRole="PRODUCT" />
+  </EntityType>
+  <Association Name="FK_PRODUCTS_MEASURES">
+    <End Type="MarketDBModel.MEASURE" Role="MEASURE" Multiplicity="0..1" />
+    <End Type="MarketDBModel.PRODUCT" Role="PRODUCT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MEASURE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PRODUCT">
+        <PropertyRef Name="MEASUREID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PRODUCTS_VENDORS">
+    <End Type="MarketDBModel.VENDOR" Role="VENDOR" Multiplicity="0..1" />
+    <End Type="MarketDBModel.PRODUCT" Role="PRODUCT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VENDOR">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PRODUCT">
+        <PropertyRef Name="VENDORID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

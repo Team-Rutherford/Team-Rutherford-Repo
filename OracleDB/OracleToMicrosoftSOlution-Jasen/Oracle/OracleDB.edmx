@@ -1,0 +1,749 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="OracleDBConnection.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MEASURES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="MEASURENAME" Type="nchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PRODUCTS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="VENDORID" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="PRODUCTNAME" Type="nchar" MaxLength="200" Nullable="false" />
+          <Property Name="MEASUREID" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="PRICE" Type="number" Precision="19" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VENDORS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="VENDORNAME" Type="nchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <Association Name="PRODUCTS_MEASURES_FK">
+          <End Role="MEASURES" Type="Self.MEASURES" Multiplicity="1" />
+          <End Role="PRODUCTS" Type="Self.PRODUCTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MEASURES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRODUCTS">
+              <PropertyRef Name="MEASUREID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PRODUCTS_VENDORS_FK">
+          <End Role="VENDORS" Type="Self.VENDORS" Multiplicity="1" />
+          <End Role="PRODUCTS" Type="Self.PRODUCTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VENDORS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRODUCTS">
+              <PropertyRef Name="VENDORID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="ORA_ASPNET_APPS_CREATEAPP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="APPLICATIONID_" Type="raw" Mode="Out" />
+        </Function>
+        <Function Name="ORA_ASPNET_CREATEPAGE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY">
+          <Parameter Name="APPID" Type="raw" Mode="In" />
+          <Parameter Name="PAGE" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PAGEID" Type="raw" Mode="InOut" />
+        </Function>
+        <Function Name="ORA_ASPNET_CREATEUSER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY">
+          <Parameter Name="APPLICATIONID_" Type="raw" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="ISUSERANONYMOUS" Type="number" Mode="In" />
+          <Parameter Name="LASTACTIVITYDATE_" Type="date" Mode="In" />
+          <Parameter Name="USERID_" Type="raw" Mode="InOut" />
+        </Function>
+        <Function Name="ORA_ASPNET_GETSITEMAPDATA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_INDEXEXISTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="INDEXNAME_" Type="nvarchar2" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_LOGWEBEVENTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY">
+          <Parameter Name="EVENTID" Type="varchar2" Mode="In" />
+          <Parameter Name="EVENTTIMEUTC" Type="date" Mode="In" />
+          <Parameter Name="EVENTTIME" Type="date" Mode="In" />
+          <Parameter Name="EVENTTYPE" Type="nvarchar2" Mode="In" />
+          <Parameter Name="EVENTSEQUENCE" Type="number" Mode="In" />
+          <Parameter Name="EVENTOCCURENCE" Type="number" Mode="In" />
+          <Parameter Name="EVENTCODE" Type="number" Mode="In" />
+          <Parameter Name="EVENTDETAILCODE" Type="number" Mode="In" />
+          <Parameter Name="MESSAGE" Type="nvarchar2" Mode="In" />
+          <Parameter Name="APPLICATIONPATH" Type="nvarchar2" Mode="In" />
+          <Parameter Name="APPLICATIONVIRTUALPATH" Type="nvarchar2" Mode="In" />
+          <Parameter Name="MACHINENAME" Type="nvarchar2" Mode="In" />
+          <Parameter Name="REQUESTURL" Type="nvarchar2" Mode="In" />
+          <Parameter Name="EXCEPTIONTYPE" Type="nvarchar2" Mode="In" />
+          <Parameter Name="DETAILS" Type="nclob" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_MEM_CHANGEPWDQANDA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="NEWPASSWORDQUESTION" Type="nvarchar2" Mode="In" />
+          <Parameter Name="NEWPASSWORDANSWER" Type="nvarchar2" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_MEM_CREATEUSER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PASSWORD_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PASSWORDSALT_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="EMAIL_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PASSWORDQUESTION_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PASSWORDANSWER_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="ISAPPROVED_" Type="number" Mode="In" />
+          <Parameter Name="CURRENTTIMEUTC" Type="date" Mode="In" />
+          <Parameter Name="CREATEDATE_" Type="date" Mode="In" />
+          <Parameter Name="UNIQUEEMAIL" Type="number" Mode="In" />
+          <Parameter Name="PASSWORDFORMAT_" Type="number" Mode="In" />
+          <Parameter Name="USERID_" Type="raw" Mode="InOut" />
+        </Function>
+        <Function Name="ORA_ASPNET_MEM_DELETEUSER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="TABLESTODELETEFROM" Type="number" Mode="In" />
+          <Parameter Name="NUMTABLESDELETEDFROM" Type="number" Mode="InOut" />
+        </Function>
+        <Function Name="ORA_ASPNET_MEM_FINDUSERSBYEML" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="EMAILTOMATCH" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PAGEINDEX" Type="number" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="number" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="Out" />
+          <Parameter Name="EMAIL_" Type="nvarchar2" Mode="Out" />
+          <Parameter Name="PASSWORDQUESTION_" Type="nvarchar2" Mode="Out" />
+          <Parameter Name="COMMENTS_" Type="nclob" Mode="Out" />
+          <Parameter Name="ISAPPROVED_" Type="number" Mode="Out" />
+          <Parameter Name="CREATEDATE_" Type="date" Mode="Out" />
+          <Parameter Name="LASTLOGINDATE_" Type="date" Mode="Out" />
+          <Parameter Name="LASTACTIVITYDATE_" Type="date" Mode="Out" />
+          <Parameter Name="LASTPASSWORDCHANGEDDATE_" Type="date" Mode="Out" />
+          <Parameter Name="ISLOCKEDOUT_" Type="number" Mode="Out" />
+          <Parameter Name="LASTLOCKOUTDATE_" Type="date" Mode="Out" />
+          <Parameter Name="USERID_" Type="raw" Mode="Out" />
+        </Function>
+        <Function Name="ORA_ASPNET_MEM_FINDUSERSBYNAME" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USERNAMETOMATCH" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PAGEINDEX" Type="number" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="number" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="Out" />
+          <Parameter Name="EMAIL_" Type="nvarchar2" Mode="Out" />
+          <Parameter Name="PASSWORDQUESTION_" Type="nvarchar2" Mode="Out" />
+          <Parameter Name="COMMENTS_" Type="nclob" Mode="Out" />
+          <Parameter Name="ISAPPROVED_" Type="number" Mode="Out" />
+          <Parameter Name="CREATEDATE_" Type="date" Mode="Out" />
+          <Parameter Name="LASTLOGINDATE_" Type="date" Mode="Out" />
+          <Parameter Name="LASTACTIVITYDATE_" Type="date" Mode="Out" />
+          <Parameter Name="LASTPASSWORDCHANGEDDATE_" Type="date" Mode="Out" />
+          <Parameter Name="ISLOCKEDOUT_" Type="number" Mode="Out" />
+          <Parameter Name="LASTLOCKOUTDATE_" Type="date" Mode="Out" />
+          <Parameter Name="USERID_" Type="raw" Mode="Out" />
+        </Function>
+        <Function Name="ORA_ASPNET_MEM_GETALLUSERS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PAGEINDEX" Type="number" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="number" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_MEM_GETNUMOFUSERSON" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="MINUTESSINCELASTINACTIVE" Type="number" Mode="In" />
+          <Parameter Name="CURRENTTIMEUTC" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_MEM_GETPASSWORD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="MAXINVALIDPASSWORDATTEMPTS" Type="number" Mode="In" />
+          <Parameter Name="PASSWORDATTEMPTWINDOW" Type="number" Mode="In" />
+          <Parameter Name="CURRENTTIMEUTC" Type="date" Mode="In" />
+          <Parameter Name="PASSWORDANSWER_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PASSWORD_" Type="nvarchar2" Mode="Out" />
+          <Parameter Name="PASSWORDFORMAT_" Type="number" Mode="Out" />
+        </Function>
+        <Function Name="ORA_ASPNET_MEM_GETPWDWITHFMT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="UPDATELASTLOGINACTIVITYDATE" Type="number" Mode="In" />
+          <Parameter Name="CURRENTTIMEUTC" Type="date" Mode="In" />
+          <Parameter Name="PASSWORD_" Type="nvarchar2" Mode="Out" />
+          <Parameter Name="PASSWORDFORMAT_" Type="number" Mode="Out" />
+          <Parameter Name="PASSWORDSALT_" Type="nvarchar2" Mode="Out" />
+          <Parameter Name="FAILEDPWDATTEMPTCOUNT_" Type="number" Mode="Out" />
+          <Parameter Name="FAILEDPWDANSWERATTEMPTCOUNT_" Type="number" Mode="Out" />
+          <Parameter Name="ISAPPROVED_" Type="number" Mode="Out" />
+          <Parameter Name="LASTLOGINDATE_" Type="date" Mode="Out" />
+          <Parameter Name="LASTACTIVITYDATE_" Type="date" Mode="Out" />
+        </Function>
+        <Function Name="ORA_ASPNET_MEM_GETUSERBYEML" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="EMAIL_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="Out" />
+          <Parameter Name="MULTIROWS_" Type="number" Mode="Out" />
+        </Function>
+        <Function Name="ORA_ASPNET_MEM_GETUSERBYNAME" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="CURRENTTIMEUTC" Type="date" Mode="In" />
+          <Parameter Name="UPDATELASTACTIVITY" Type="number" Mode="In" />
+          <Parameter Name="EMAIL_" Type="nvarchar2" Mode="Out" />
+          <Parameter Name="PASSWORDQUESTION_" Type="nvarchar2" Mode="Out" />
+          <Parameter Name="COMMENTS_" Type="nclob" Mode="Out" />
+          <Parameter Name="ISAPPROVED_" Type="number" Mode="Out" />
+          <Parameter Name="CREATEDATE_" Type="date" Mode="Out" />
+          <Parameter Name="LASTLOGINDATE_" Type="date" Mode="Out" />
+          <Parameter Name="LASTACTIVITYDATE_" Type="date" Mode="Out" />
+          <Parameter Name="LASTPASSWORDCHANGEDDATE_" Type="date" Mode="Out" />
+          <Parameter Name="USERID_" Type="raw" Mode="Out" />
+          <Parameter Name="ISLOCKEDOUT_" Type="number" Mode="Out" />
+          <Parameter Name="LASTLOCKOUTDATE_" Type="date" Mode="Out" />
+        </Function>
+        <Function Name="ORA_ASPNET_MEM_GETUSERBYUID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="USERID_" Type="raw" Mode="In" />
+          <Parameter Name="CURRENTTIMEUTC" Type="date" Mode="In" />
+          <Parameter Name="UPDATELASTACTIVITY" Type="number" Mode="In" />
+          <Parameter Name="EMAIL_" Type="nvarchar2" Mode="Out" />
+          <Parameter Name="PASSWORDQUESTION_" Type="nvarchar2" Mode="Out" />
+          <Parameter Name="COMMENTS_" Type="nclob" Mode="Out" />
+          <Parameter Name="ISAPPROVED_" Type="number" Mode="Out" />
+          <Parameter Name="CREATEDATE_" Type="date" Mode="Out" />
+          <Parameter Name="LASTLOGINDATE_" Type="date" Mode="Out" />
+          <Parameter Name="LASTACTIVITYDATE_" Type="date" Mode="Out" />
+          <Parameter Name="LASTPASSWORDCHANGEDDATE_" Type="date" Mode="Out" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="Out" />
+          <Parameter Name="ISLOCKEDOUT_" Type="number" Mode="Out" />
+          <Parameter Name="LASTLOCKOUTDATE_" Type="date" Mode="Out" />
+        </Function>
+        <Function Name="ORA_ASPNET_MEM_RESETPASSWORD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="NEWPASSWORD" Type="nvarchar2" Mode="In" />
+          <Parameter Name="MAXINVALIDPASSWORDATTEMPTS" Type="number" Mode="In" />
+          <Parameter Name="PASSWORDATTEMPTWINDOW" Type="number" Mode="In" />
+          <Parameter Name="PASSWORDSALT_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="CURRENTTIMEUTC" Type="date" Mode="In" />
+          <Parameter Name="PASSWORDFORMAT_" Type="number" Mode="In" />
+          <Parameter Name="PASSWORDANSWER_" Type="nvarchar2" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_MEM_SETPASSWORD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="NEWPASSWORD" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PASSWORDSALT_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="CURRENTTIMEUTC" Type="date" Mode="In" />
+          <Parameter Name="PASSWORDFORMAT_" Type="number" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_MEM_UNLOCKUSER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_MEM_UPDATEUSER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="EMAIL_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="COMMENTS_" Type="nclob" Mode="In" />
+          <Parameter Name="ISAPPROVED_" Type="number" Mode="In" />
+          <Parameter Name="LASTLOGINDATE_" Type="date" Mode="In" />
+          <Parameter Name="LASTACTIVITYDATE_" Type="date" Mode="In" />
+          <Parameter Name="UNIQUEEMAIL" Type="number" Mode="In" />
+          <Parameter Name="CURRENTTIMEUTC_" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_MEM_UPDATEUSERINFO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="ISPASSWORDCORRECT" Type="number" Mode="In" />
+          <Parameter Name="UPDATELASTLOGINACTIVITYDATE" Type="number" Mode="In" />
+          <Parameter Name="MAXINVALIDPASSWORDATTEMPTS" Type="number" Mode="In" />
+          <Parameter Name="PASSWORDATTEMPTWINDOW" Type="number" Mode="In" />
+          <Parameter Name="CURRENTTIMEUTC" Type="date" Mode="In" />
+          <Parameter Name="LASTLOGINDATE_" Type="date" Mode="In" />
+          <Parameter Name="LASTACTIVITYDATE_" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_PAU_GETPGSETTINGS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY">
+          <Parameter Name="APPNAME" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PAGE" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PAGESETTINGS" Type="blob" Mode="Out" />
+        </Function>
+        <Function Name="ORA_ASPNET_PAU_RESETPGSETTINGS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY">
+          <Parameter Name="APPNAME" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PAGE" Type="nvarchar2" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_PAU_SETPGSETTINGS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY">
+          <Parameter Name="APPNAME" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PAGE" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PAGESETTINGS_" Type="blob" Mode="Out" />
+          <Parameter Name="CURRENTTIME" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_PA_FINDSTATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY">
+          <Parameter Name="SCOPE" Type="nvarchar2" Mode="In" />
+          <Parameter Name="APPNAME" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PAGE" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PAGEINDEX" Type="number" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="number" Mode="In" />
+          <Parameter Name="TOTALRECORDS" Type="number" Mode="Out" />
+          <Parameter Name="USRNAME" Type="nvarchar2" Mode="In" />
+          <Parameter Name="INACTIVESINCEDATE" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_PA_GETCOUNTOFSTATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY">
+          <Parameter Name="SCOPE" Type="nvarchar2" Mode="In" />
+          <Parameter Name="APPNAME" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PAGE" Type="nvarchar2" Mode="In" />
+          <Parameter Name="COUNT" Type="number" Mode="Out" />
+          <Parameter Name="USRNAME" Type="nvarchar2" Mode="In" />
+          <Parameter Name="INACTIVESINCEDATE" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_PA_RESETSHAREDSTATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY">
+          <Parameter Name="RESETCOUNT" Type="number" Mode="Out" />
+          <Parameter Name="APPNAME" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PAGE" Type="nvarchar2" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_PA_RESETUSERSTATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY">
+          <Parameter Name="RESETCOUNT" Type="number" Mode="Out" />
+          <Parameter Name="APPNAME" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PAGE" Type="nvarchar2" Mode="In" />
+          <Parameter Name="INACTIVESINCEDATE" Type="date" Mode="In" />
+          <Parameter Name="USRNAME" Type="nvarchar2" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_PPU_GETPGSETTINGS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY">
+          <Parameter Name="APPNAME" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PAGE" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PAGESETTINGS" Type="blob" Mode="Out" />
+          <Parameter Name="USRNAME" Type="nvarchar2" Mode="In" />
+          <Parameter Name="CURRENTTIME" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_PPU_RESETPGSETTINGS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY">
+          <Parameter Name="APPNAME" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PAGE" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USRNAME" Type="nvarchar2" Mode="In" />
+          <Parameter Name="CURRENTTIME" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_PPU_SETPGSETTINGS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY">
+          <Parameter Name="APPNAME" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PAGE" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PAGESETTINGS_" Type="blob" Mode="Out" />
+          <Parameter Name="CURRENTTIME" Type="date" Mode="In" />
+          <Parameter Name="USRNAME" Type="nvarchar2" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_PROF_DELETEINACTPF" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PROFILEAUTHOPTIONS" Type="number" Mode="In" />
+          <Parameter Name="INACTIVESINCEDATE" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_PROF_DELETEPROFILES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_PROF_GETNOFINACTPF" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PROFILEAUTHOPTIONS" Type="number" Mode="In" />
+          <Parameter Name="INACTIVESINCEDATE" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_PROF_GETPROFILES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PROFILEAUTHOPTIONS" Type="number" Mode="In" />
+          <Parameter Name="PAGEINDEX" Type="number" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="number" Mode="In" />
+          <Parameter Name="USERNAMETOMATCH" Type="nvarchar2" Mode="In" />
+          <Parameter Name="INACTIVESINCEDATE" Type="date" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="Out" />
+          <Parameter Name="ISANONYMOUS_" Type="number" Mode="Out" />
+          <Parameter Name="LASTACTIVITYDATE_" Type="date" Mode="Out" />
+          <Parameter Name="LASTUPDATEDDATE_" Type="date" Mode="Out" />
+          <Parameter Name="SIZE_" Type="number" Mode="Out" />
+        </Function>
+        <Function Name="ORA_ASPNET_PROF_GETPROPERTIES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="CURRENTTIMEUTC" Type="date" Mode="In" />
+          <Parameter Name="NAMES_" Type="nclob" Mode="Out" />
+          <Parameter Name="VALUES_" Type="nclob" Mode="Out" />
+          <Parameter Name="BUF_" Type="blob" Mode="Out" />
+        </Function>
+        <Function Name="ORA_ASPNET_PROF_SETPROPERTIES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="PROPERTYNAMES_" Type="nclob" Mode="In" />
+          <Parameter Name="PROPERTYVALUESSTRING_" Type="nclob" Mode="In" />
+          <Parameter Name="PROPERTYVALUESBINARY_" Type="blob" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="ISUSERANONYMOUS" Type="number" Mode="In" />
+          <Parameter Name="CURRENTTIMEUTC" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_ROLES_CREATEROLE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="ROLENAME_" Type="nvarchar2" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_ROLES_DELETEROLE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="ROLENAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="DELETEONLYIFROLEISEMPTY" Type="number" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_ROLES_GETALLROLES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_ROLES_ROLEEXISTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="ROLENAME_" Type="nvarchar2" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_SESSNAPP_GETAPPID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="APPID_" Type="raw" Mode="Out" />
+        </Function>
+        <Function Name="ORA_ASPNET_SESSN_GETSTATEITEM" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="ID" Type="nvarchar2" Mode="In" />
+          <Parameter Name="ITEMSHORT" Type="raw" Mode="Out" />
+          <Parameter Name="SESSIONLOCKED" Type="number" Mode="Out" />
+          <Parameter Name="LOCKAGE" Type="number" Mode="Out" />
+          <Parameter Name="SESSIONLOCKCOOKIE" Type="number" Mode="Out" />
+          <Parameter Name="ACTIONFLAGS" Type="number" Mode="Out" />
+          <Parameter Name="ITEMLONG" Type="blob" Mode="Out" />
+        </Function>
+        <Function Name="ORA_ASPNET_SESSN_GETSTATEITMEX" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="ID" Type="nvarchar2" Mode="In" />
+          <Parameter Name="ITEMSHORT" Type="raw" Mode="Out" />
+          <Parameter Name="SESSIONLOCKED" Type="number" Mode="Out" />
+          <Parameter Name="LOCKAGE" Type="number" Mode="Out" />
+          <Parameter Name="SESSIONLOCKCOOKIE" Type="number" Mode="Out" />
+          <Parameter Name="ACTIONFLAGS" Type="number" Mode="Out" />
+          <Parameter Name="ITEMLONG" Type="blob" Mode="Out" />
+        </Function>
+        <Function Name="ORA_ASPNET_SESSN_INSSTATEITEM" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="ID" Type="nvarchar2" Mode="In" />
+          <Parameter Name="ITEMSHORT" Type="raw" Mode="In" />
+          <Parameter Name="ITEMLONG" Type="blob" Mode="In" />
+          <Parameter Name="SESSIONTIMEOUT" Type="number" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_SESSN_INSUNINITITEM" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="ID" Type="nvarchar2" Mode="In" />
+          <Parameter Name="ITEMSHORT" Type="raw" Mode="In" />
+          <Parameter Name="SESSIONTIMEOUT" Type="number" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_SESSN_RELSTATEITMEX" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="ID" Type="nvarchar2" Mode="In" />
+          <Parameter Name="SESSIONLOCKCOOKIE" Type="number" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_SESSN_RESETTIMEOUT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="ID" Type="nvarchar2" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_SESSN_RMSTATEITEM" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="ID" Type="nvarchar2" Mode="In" />
+          <Parameter Name="SESSIONLOCKCOOKIE" Type="number" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_SESSN_UPDSTATEITEM" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="ID" Type="nvarchar2" Mode="In" />
+          <Parameter Name="ITEMSHORT" Type="raw" Mode="In" />
+          <Parameter Name="ITEMLONG" Type="blob" Mode="In" />
+          <Parameter Name="SESSIONTIMEOUT" Type="number" Mode="In" />
+          <Parameter Name="SESSIONLOCKCOOKIE" Type="number" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_TABLEEXISTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="TABLENAME_" Type="nvarchar2" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_UIR_ADDUSERSTOROLES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USERNAMES_ARR_SIZE" Type="number" Mode="In" />
+          <Parameter Name="ROLENAMES_ARR_SIZE" Type="number" Mode="In" />
+          <Parameter Name="USERNAME" Type="nvarchar2" Mode="Out" />
+          <Parameter Name="ROLENAME" Type="nvarchar2" Mode="Out" />
+        </Function>
+        <Function Name="ORA_ASPNET_UIR_FINDUSERSINROLE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="ROLENAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USERNAMETOMATCH" Type="nvarchar2" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_UIR_GETROLESFORUSER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_UIR_GETUSERSINROLES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="ROLENAME_" Type="nvarchar2" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_UIR_ISUSERINROLE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="ROLENAME_" Type="nvarchar2" Mode="In" />
+        </Function>
+        <Function Name="ORA_ASPNET_UIR_REMUSERSFMROLES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USERNAMES_ARR_SIZE" Type="number" Mode="In" />
+          <Parameter Name="ROLENAMES_ARR_SIZE" Type="number" Mode="In" />
+          <Parameter Name="USERNAME" Type="nvarchar2" Mode="Out" />
+          <Parameter Name="ROLENAME" Type="nvarchar2" Mode="Out" />
+        </Function>
+        <Function Name="ORA_ASPNET_USERS_CREATEUSER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONID_" Type="raw" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="ISUSERANONYMOUS" Type="number" Mode="In" />
+          <Parameter Name="LASTACTIVITYDATE_" Type="date" Mode="In" />
+          <Parameter Name="USERID_" Type="raw" Mode="InOut" />
+        </Function>
+        <Function Name="ORA_ASPNET_USERS_DELETEUSER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="JAZASTRY" ReturnType="number">
+          <Parameter Name="APPLICATIONNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="USERNAME_" Type="nvarchar2" Mode="In" />
+          <Parameter Name="TABLESTODELETEFROM" Type="number" Mode="In" />
+          <Parameter Name="NUMTABLESDELETEDFROM" Type="number" Mode="InOut" />
+        </Function>
+        <EntityContainer Name="OracleDBConnectionStoreContainer">
+          <EntitySet Name="MEASURES" EntityType="Self.MEASURES" Schema="JAZASTRY" store:Type="Tables" />
+          <EntitySet Name="PRODUCTS" EntityType="Self.PRODUCTS" Schema="JAZASTRY" store:Type="Tables" />
+          <EntitySet Name="VENDORS" EntityType="Self.VENDORS" Schema="JAZASTRY" store:Type="Tables" />
+          <AssociationSet Name="PRODUCTS_MEASURES_FK" Association="Self.PRODUCTS_MEASURES_FK">
+            <End Role="MEASURES" EntitySet="MEASURES" />
+            <End Role="PRODUCTS" EntitySet="PRODUCTS" />
+          </AssociationSet>
+          <AssociationSet Name="PRODUCTS_VENDORS_FK" Association="Self.PRODUCTS_VENDORS_FK">
+            <End Role="VENDORS" EntitySet="VENDORS" />
+            <End Role="PRODUCTS" EntitySet="PRODUCTS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OracleDBConnection" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="MEASURE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="MEASURENAME" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PRODUCTS" Relationship="Self.PRODUCTS_MEASURES_FK" FromRole="MEASURES" ToRole="PRODUCTS" />
+        </EntityType>
+        <EntityType Name="PRODUCT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="VENDORID" Type="Int32" Nullable="false" />
+          <Property Name="PRODUCTNAME" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="MEASUREID" Type="Int32" Nullable="false" />
+          <Property Name="PRICE" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="MEASURE" Relationship="Self.PRODUCTS_MEASURES_FK" FromRole="PRODUCTS" ToRole="MEASURES" />
+          <NavigationProperty Name="VENDOR" Relationship="Self.PRODUCTS_VENDORS_FK" FromRole="PRODUCTS" ToRole="VENDORS" />
+        </EntityType>
+        <EntityType Name="VENDOR">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="VENDORNAME" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PRODUCTS" Relationship="Self.PRODUCTS_VENDORS_FK" FromRole="VENDORS" ToRole="PRODUCTS" />
+        </EntityType>
+        <Association Name="PRODUCTS_MEASURES_FK">
+          <End Role="MEASURES" Type="Self.MEASURE" Multiplicity="1" />
+          <End Role="PRODUCTS" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MEASURES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRODUCTS">
+              <PropertyRef Name="MEASUREID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PRODUCTS_VENDORS_FK">
+          <End Role="VENDORS" Type="Self.VENDOR" Multiplicity="1" />
+          <End Role="PRODUCTS" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VENDORS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRODUCTS">
+              <PropertyRef Name="VENDORID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MEASURES" EntityType="Self.MEASURE" />
+          <EntitySet Name="PRODUCTS" EntityType="Self.PRODUCT" />
+          <EntitySet Name="VENDORS" EntityType="Self.VENDOR" />
+          <AssociationSet Name="PRODUCTS_MEASURES_FK" Association="Self.PRODUCTS_MEASURES_FK">
+            <End Role="MEASURES" EntitySet="MEASURES" />
+            <End Role="PRODUCTS" EntitySet="PRODUCTS" />
+          </AssociationSet>
+          <AssociationSet Name="PRODUCTS_VENDORS_FK" Association="Self.PRODUCTS_VENDORS_FK">
+            <End Role="VENDORS" EntitySet="VENDORS" />
+            <End Role="PRODUCTS" EntitySet="PRODUCTS" />
+          </AssociationSet>
+          <FunctionImport Name="ORA_ASPNET_CREATEPAGE">
+            <Parameter Name="APPID" Mode="In" Type="Binary" />
+            <Parameter Name="PAGE" Mode="In" Type="String" />
+            <Parameter Name="PAGEID" Mode="InOut" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="ORA_ASPNET_CREATEUSER">
+            <Parameter Name="APPLICATIONID_" Mode="In" Type="Binary" />
+            <Parameter Name="USERNAME_" Mode="In" Type="String" />
+            <Parameter Name="ISUSERANONYMOUS" Mode="In" Type="Decimal" />
+            <Parameter Name="LASTACTIVITYDATE_" Mode="In" Type="DateTime" />
+            <Parameter Name="USERID_" Mode="InOut" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="ORA_ASPNET_GETSITEMAPDATA">
+            <Parameter Name="APPLICATIONNAME_" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ORA_ASPNET_LOGWEBEVENTS">
+            <Parameter Name="EVENTID" Mode="In" Type="String" />
+            <Parameter Name="EVENTTIMEUTC" Mode="In" Type="DateTime" />
+            <Parameter Name="EVENTTIME" Mode="In" Type="DateTime" />
+            <Parameter Name="EVENTTYPE" Mode="In" Type="String" />
+            <Parameter Name="EVENTSEQUENCE" Mode="In" Type="Decimal" />
+            <Parameter Name="EVENTOCCURENCE" Mode="In" Type="Decimal" />
+            <Parameter Name="EVENTCODE" Mode="In" Type="Decimal" />
+            <Parameter Name="EVENTDETAILCODE" Mode="In" Type="Decimal" />
+            <Parameter Name="MESSAGE" Mode="In" Type="String" />
+            <Parameter Name="APPLICATIONPATH" Mode="In" Type="String" />
+            <Parameter Name="APPLICATIONVIRTUALPATH" Mode="In" Type="String" />
+            <Parameter Name="MACHINENAME" Mode="In" Type="String" />
+            <Parameter Name="REQUESTURL" Mode="In" Type="String" />
+            <Parameter Name="EXCEPTIONTYPE" Mode="In" Type="String" />
+            <Parameter Name="DETAILS" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ORA_ASPNET_PAU_GETPGSETTINGS">
+            <Parameter Name="APPNAME" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="String" />
+            <Parameter Name="PAGESETTINGS" Mode="Out" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="ORA_ASPNET_PAU_RESETPGSETTINGS">
+            <Parameter Name="APPNAME" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ORA_ASPNET_PAU_SETPGSETTINGS">
+            <Parameter Name="APPNAME" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="String" />
+            <Parameter Name="PAGESETTINGS_" Mode="Out" Type="Binary" />
+            <Parameter Name="CURRENTTIME" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ORA_ASPNET_PA_FINDSTATE">
+            <Parameter Name="SCOPE" Mode="In" Type="String" />
+            <Parameter Name="APPNAME" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="String" />
+            <Parameter Name="PAGEINDEX" Mode="In" Type="Decimal" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Decimal" />
+            <Parameter Name="TOTALRECORDS" Mode="Out" Type="Decimal" />
+            <Parameter Name="USRNAME" Mode="In" Type="String" />
+            <Parameter Name="INACTIVESINCEDATE" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ORA_ASPNET_PA_GETCOUNTOFSTATE">
+            <Parameter Name="SCOPE" Mode="In" Type="String" />
+            <Parameter Name="APPNAME" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="String" />
+            <Parameter Name="COUNT" Mode="Out" Type="Decimal" />
+            <Parameter Name="USRNAME" Mode="In" Type="String" />
+            <Parameter Name="INACTIVESINCEDATE" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ORA_ASPNET_PA_RESETSHAREDSTATE">
+            <Parameter Name="RESETCOUNT" Mode="Out" Type="Decimal" />
+            <Parameter Name="APPNAME" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ORA_ASPNET_PA_RESETUSERSTATE">
+            <Parameter Name="RESETCOUNT" Mode="Out" Type="Decimal" />
+            <Parameter Name="APPNAME" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="String" />
+            <Parameter Name="INACTIVESINCEDATE" Mode="In" Type="DateTime" />
+            <Parameter Name="USRNAME" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ORA_ASPNET_PPU_GETPGSETTINGS">
+            <Parameter Name="APPNAME" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="String" />
+            <Parameter Name="PAGESETTINGS" Mode="Out" Type="Binary" />
+            <Parameter Name="USRNAME" Mode="In" Type="String" />
+            <Parameter Name="CURRENTTIME" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ORA_ASPNET_PPU_RESETPGSETTINGS">
+            <Parameter Name="APPNAME" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="String" />
+            <Parameter Name="USRNAME" Mode="In" Type="String" />
+            <Parameter Name="CURRENTTIME" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ORA_ASPNET_PPU_SETPGSETTINGS">
+            <Parameter Name="APPNAME" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="String" />
+            <Parameter Name="PAGESETTINGS_" Mode="Out" Type="Binary" />
+            <Parameter Name="CURRENTTIME" Mode="In" Type="DateTime" />
+            <Parameter Name="USRNAME" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OracleDBConnectionStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="MEASURES">
+            <EntityTypeMapping TypeName="OracleDBConnection.MEASURE">
+              <MappingFragment StoreEntitySet="MEASURES">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MEASURENAME" ColumnName="MEASURENAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTS">
+            <EntityTypeMapping TypeName="OracleDBConnection.PRODUCT">
+              <MappingFragment StoreEntitySet="PRODUCTS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="VENDORID" ColumnName="VENDORID" />
+                <ScalarProperty Name="PRODUCTNAME" ColumnName="PRODUCTNAME" />
+                <ScalarProperty Name="MEASUREID" ColumnName="MEASUREID" />
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VENDORS">
+            <EntityTypeMapping TypeName="OracleDBConnection.VENDOR">
+              <MappingFragment StoreEntitySet="VENDORS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="VENDORNAME" ColumnName="VENDORNAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ORA_ASPNET_CREATEPAGE" FunctionName="OracleDBConnection.Store.ORA_ASPNET_CREATEPAGE" />
+          <FunctionImportMapping FunctionImportName="ORA_ASPNET_CREATEUSER" FunctionName="OracleDBConnection.Store.ORA_ASPNET_CREATEUSER" />
+          <FunctionImportMapping FunctionImportName="ORA_ASPNET_GETSITEMAPDATA" FunctionName="OracleDBConnection.Store.ORA_ASPNET_GETSITEMAPDATA" />
+          <FunctionImportMapping FunctionImportName="ORA_ASPNET_LOGWEBEVENTS" FunctionName="OracleDBConnection.Store.ORA_ASPNET_LOGWEBEVENTS" />
+          <FunctionImportMapping FunctionImportName="ORA_ASPNET_PAU_GETPGSETTINGS" FunctionName="OracleDBConnection.Store.ORA_ASPNET_PAU_GETPGSETTINGS" />
+          <FunctionImportMapping FunctionImportName="ORA_ASPNET_PAU_RESETPGSETTINGS" FunctionName="OracleDBConnection.Store.ORA_ASPNET_PAU_RESETPGSETTINGS" />
+          <FunctionImportMapping FunctionImportName="ORA_ASPNET_PAU_SETPGSETTINGS" FunctionName="OracleDBConnection.Store.ORA_ASPNET_PAU_SETPGSETTINGS" />
+          <FunctionImportMapping FunctionImportName="ORA_ASPNET_PA_FINDSTATE" FunctionName="OracleDBConnection.Store.ORA_ASPNET_PA_FINDSTATE" />
+          <FunctionImportMapping FunctionImportName="ORA_ASPNET_PA_GETCOUNTOFSTATE" FunctionName="OracleDBConnection.Store.ORA_ASPNET_PA_GETCOUNTOFSTATE" />
+          <FunctionImportMapping FunctionImportName="ORA_ASPNET_PA_RESETSHAREDSTATE" FunctionName="OracleDBConnection.Store.ORA_ASPNET_PA_RESETSHAREDSTATE" />
+          <FunctionImportMapping FunctionImportName="ORA_ASPNET_PA_RESETUSERSTATE" FunctionName="OracleDBConnection.Store.ORA_ASPNET_PA_RESETUSERSTATE" />
+          <FunctionImportMapping FunctionImportName="ORA_ASPNET_PPU_GETPGSETTINGS" FunctionName="OracleDBConnection.Store.ORA_ASPNET_PPU_GETPGSETTINGS" />
+          <FunctionImportMapping FunctionImportName="ORA_ASPNET_PPU_RESETPGSETTINGS" FunctionName="OracleDBConnection.Store.ORA_ASPNET_PPU_RESETPGSETTINGS" />
+          <FunctionImportMapping FunctionImportName="ORA_ASPNET_PPU_SETPGSETTINGS" FunctionName="OracleDBConnection.Store.ORA_ASPNET_PPU_SETPGSETTINGS" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

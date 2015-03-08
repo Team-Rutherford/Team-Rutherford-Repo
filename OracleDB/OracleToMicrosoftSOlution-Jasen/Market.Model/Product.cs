@@ -9,7 +9,7 @@ namespace Market.Model
     public class Product
     {
         public int Id { get; set; }
-        public int ProductName { get; set; }
+        public string ProductName { get; set; }
 
         public int VendorId { get; set; }
 

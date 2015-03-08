@@ -10,8 +10,8 @@ using System.Data.SqlClient;
 using System.Collections;
 using System.Configuration.Assemblies;
 using System.Configuration;
-using OracleToMicrosoft.OracleDBTableAdapters;
 using OracleToMicrosoft;
+
 
 namespace OracleToMicrosoft
 {
@@ -20,23 +20,25 @@ namespace OracleToMicrosoft
         static void Main(string[] args)
         {
 
-            MEASURESTableAdapter measuresOracle = new MEASURESTableAdapter();
-            PRODUCTSTableAdapter productsOracle = new PRODUCTSTableAdapter();
-            VENDORSTableAdapter vendorsOracle = new VENDORSTableAdapter();
-            DataTable measuresTableOracle = measuresOracle.GetData();
-            DataTable productsTableOracle = productsOracle.GetData();
-            DataTable vendorsTableOracle = vendorsOracle.GetData();
+            //MEASURESTableAdapter measuresOracle = new MEASURESTableAdapter();
+            //PRODUCTSTableAdapter productsOracle = new PRODUCTSTableAdapter();
+            //VENDORSTableAdapter vendorsOracle = new VENDORSTableAdapter();
+            //DataTable measuresTableOracle = measuresOracle.GetData();
+            //DataTable productsTableOracle = productsOracle.GetData();
+            //DataTable vendorsTableOracle = vendorsOracle.GetData();
 
-            MarketDBContext microsoftDB = new MarketDBContext();
-            DbSet measuresMicrosoft = microsoftDB.MEASURES;
+            //MarketDBContext microsoftDB = new MarketDBContext();
+            
            
 
-            DataTable[] tables = new DataTable[] 
-            { 
-                measuresTableOracle,
-                //productsTable,
-                vendorsTableOracle    
-            };
+            //DataTable[] tables = new DataTable[] 
+            //{ 
+            //    measuresTableOracle         
+            //    //productsTable,       
+            //    //vendorsTableOracle    
+            //};
+
+           
 
             //DataSet transDataset = new DataSet();
             //transDataset.Tables.Add(measuresTableOracle);
@@ -45,7 +47,7 @@ namespace OracleToMicrosoft
 
             //string st = measuresTableOracle.TableName.ToString();
 
-            AddTablesToDB(tables);
+            //AddTablesToDB(tables);
         }
 
         public static void AddTablesToDB(DataTable[] tables)

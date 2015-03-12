@@ -89,6 +89,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IMarketData.cs" />
+    <Compile Include="ReportContainer.cs" />
+    <Compile Include="ReportData.cs" />
     <Compile Include="Supermarket.cs" />
     <Compile Include="MarketData.cs" />
     <Compile Include="Measure.cs" />

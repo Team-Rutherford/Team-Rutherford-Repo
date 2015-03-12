@@ -41,8 +41,8 @@ namespace OracleDatabase
                 Id = oracleProduct.ID,
                 Name = oracleProduct.PRODUCTNAME, 
                 Price = (double) oracleProduct.PRICE,
-                Measure = MeasureAapter(oracleProduct.MEASURE),
-                Vendor = VendorAdapter(oracleProduct.VENDOR)
+                MeasureId = oracleProduct.MEASUREID,
+                VendorId = oracleProduct.VENDORID
             };
 
             return product;
@@ -87,8 +87,8 @@ namespace OracleDatabase
             {
                 Id = oracleSale.ID,
                 Date = oracleSale.SALE_DATE,
-                Product = ProductAdapter(oracleSale.PRODUCT),
-                Supermarket = SupermarketAdapter(oracleSale.SUPERMARKET),
+                ProductId = oracleSale.PRODUCT_ID,
+                SupermarketId = oracleSale.SUPERMARKET_ID,
                 Quantity = (double)oracleSale.QUANTITY
             };
 

@@ -1,38 +1,48 @@
-﻿namespace TestingProject
+﻿using System.Data.Entity.Core.Metadata.Edm;
+using System.IO;
+using MarketSystemModel;
+using MongoDB.Bson;
+using MongoDbDatabase;
+
+namespace TestingProject
 {
     using System;
     using System.Linq;
     using OracleDatabase;
     using XmlSalesReport;
-    using  System.Xml.Linq;
+    using System.Runtime.Serialization.Json;
     using MsSqlDatabase;
-    using PDFSalesReport;
+    using System.Diagnostics;
 
     class TestingMainClass
     { 
         static void Main()
         {
-            //var oracleDb = new OracleEntities();
-            //Console.WriteLine(oracleDb.VENDORS.Find(1).VENDORNAME);
-           // var transmiter = new OracleTransmiter();
-           // var marketData = transmiter.GetData();
 
+            //Process.Start(@"C:\Program Files\MongoDB 2.6 Standard\bin\mongo.exe");
+
+            var oracleDb = new OracleEntities();
+            //Console.WriteLine(oracleDb.VENDORS.Find(1).VENDORNAME);
+            //var transmiter = new OracleTransmiter();
+            //var marketData = transmiter.GetData();
             //DbManager.SaveData(marketData);
+
             //var data = DbManager.GetSalesGroupByVendorAndDate();
             //var xmlSalesReport = new XmlSalesReportByVendor(data);
             //xmlSalesReport.Document.Save(Console.Out);
-            //xmlSalesReport.Save(@"d:\sales-report.xml");
+            //xmlSalesReport.Save(@"d:\1\sales-report.xml");
 
-            //Console.WriteLine(marketData.Vendors.First().Name);
+            var reports = DbManager.GetSalesOfEachProductForPeriod(new DateTime(2014, 1, 1), new DateTime(2014, 9, 1));
+            foreach (var reportContainer in reports)
+            {
+                var p = reportContainer.SaleReport[0];
+                var result = Json.Stringify(p);
 
-            //var report = new XmlSalesReportByVendor();
-            //report.Document.Save(Console.Out);
+                Console.WriteLine(result);
 
-            //var content = report.Document;
-            //var result = content.GetElementsByTagName("summary");
-            //Console.WriteLine(result[0].InnerText);
-
-            //ToPdf.SaleReportToPdf();
+                var filePath = @"d:\1\" + p.Id + ".json";
+                Json.SaveObjectToFile(filePath, p);
+            }
         }
    }
 }

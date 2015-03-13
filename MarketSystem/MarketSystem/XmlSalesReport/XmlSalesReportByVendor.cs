@@ -1,4 +1,4 @@
-﻿using System.IO;
+﻿﻿using System.IO;
 using System.Net.Mime;
 
 namespace XmlSalesReport
@@ -42,16 +42,19 @@ namespace XmlSalesReport
 
         public string Save(string pathFile)
         {
-            var writer = File.CreateText(pathFile);
-            this.Document.Save(writer);
+            using (var writer = File.CreateText(pathFile))
+            {
+                this.Document.Save(writer);
+            }
+            
             return "Saved successfully.";
-        }
+         }
 
-        private XmlNode CreateSummaryTag(DateTime date, double totalSum)
+        private XmlNode CreateSummaryTag(DateTime? date, double totalSum)
         {
             XmlNode summary = Document.CreateElement("summary");
             XmlAttribute summaryDate = Document.CreateAttribute("date");
-            summaryDate.Value = date.ToString("yy-MMM-yyyy", CultureInfo.CreateSpecificCulture("en-En"));
+            summaryDate.Value = ((DateTime)date).ToString("yy-MMM-yyyy", CultureInfo.CreateSpecificCulture("en-En"));
             XmlAttribute summaryTotalSum = Document.CreateAttribute("total-sum");
             summaryTotalSum.Value = totalSum.ToString("F2");
             summary.Attributes.Append(summaryDate);
@@ -78,3 +81,4 @@ namespace XmlSalesReport
         }
     }
 }
+

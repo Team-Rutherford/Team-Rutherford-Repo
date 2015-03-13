@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Data.Entity;
 
 namespace OracleDatabase
 {
@@ -39,7 +40,7 @@ namespace OracleDatabase
             var product = new Product
             {
                 Id = oracleProduct.ID,
-                Name = oracleProduct.PRODUCTNAME, 
+                Name = oracleProduct.PRODUCTNAME.TrimEnd(), 
                 Price = (double) oracleProduct.PRICE,
                 MeasureId = oracleProduct.MEASUREID,
                 VendorId = oracleProduct.VENDORID
@@ -53,7 +54,7 @@ namespace OracleDatabase
             var measure = new Measure
             {
                 Id = oracleMeasure.ID,
-                Name = oracleMeasure.MEASURENAME
+                Name = oracleMeasure.MEASURENAME.TrimEnd()
             };
 
             return measure;
@@ -64,7 +65,7 @@ namespace OracleDatabase
             var supeermarket = new Supermarket()
             {
                 Id = oracleSupermarket.ID,
-                Name = oracleSupermarket.SUPERMARKET_NAME
+                Name = oracleSupermarket.SUPERMARKET_NAME.TrimEnd()
             };
 
             return supeermarket;
@@ -75,7 +76,7 @@ namespace OracleDatabase
             var vendor = new Vendor
             {
                 Id = oracleVendor.ID,
-                Name = oracleVendor.VENDORNAME
+                Name = oracleVendor.VENDORNAME.TrimEnd()
             };
 
             return vendor;

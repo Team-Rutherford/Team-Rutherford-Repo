@@ -6,6 +6,7 @@
     using XmlSalesReport;
     using  System.Xml.Linq;
     using MsSqlDatabase;
+    using PDFSalesReport;
 
     class TestingMainClass
     { 
@@ -17,10 +18,10 @@
            // var marketData = transmiter.GetData();
 
             //DbManager.SaveData(marketData);
-            var data = DbManager.GetSalesGroupByVendorAndDate();
-            var xmlSalesReport = new XmlSalesReportByVendor(data);
-            xmlSalesReport.Document.Save(Console.Out);
-            xmlSalesReport.Save(@"d:\sales-report.xml");
+            //var data = DbManager.GetSalesGroupByVendorAndDate();
+            //var xmlSalesReport = new XmlSalesReportByVendor(data);
+            //xmlSalesReport.Document.Save(Console.Out);
+            //xmlSalesReport.Save(@"d:\sales-report.xml");
 
             //Console.WriteLine(marketData.Vendors.First().Name);
 
@@ -31,7 +32,7 @@
             //var result = content.GetElementsByTagName("summary");
             //Console.WriteLine(result[0].InnerText);
 
-
+            //ToPdf.SaleReportToPdf();
         }
    }
 }

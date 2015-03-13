@@ -118,6 +118,10 @@
       <Project>{6ace6f73-dd8e-456e-abaf-a383f9762e49}</Project>
       <Name>OracleDatabase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PDFSalesReport\PDFSalesReport.csproj">
+      <Project>{ed91224d-fc4e-4271-946c-df7584e92dc8}</Project>
+      <Name>PDFSalesReport</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XmlSalesReport\XmlSalesReport.csproj">
       <Project>{d8f0bd50-454c-4907-b90a-73500376a07a}</Project>
       <Name>XmlSalesReport</Name>

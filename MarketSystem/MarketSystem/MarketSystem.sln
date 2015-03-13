@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketSystemModel", "MarketSystemModel\MarketSystemModel.csproj", "{3DA24B12-FE85-4B23-8E26-AB9482A4305B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsSqlDatabase", "MsSqlDatabase\MsSqlDatabase.csproj", "{4225FC75-B7FE-423A-B4FF-59C51143E8D7}"
@@ -10,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OracleDatabase", "OracleDatabase\OracleDatabase.csproj", "{6ACE6F73-DD8E-456E-ABAF-A383F9762E49}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlSalesReport", "XmlSalesReport\XmlSalesReport.csproj", "{D8F0BD50-454C-4907-B90A-73500376A07A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PDFSalesReport", "PDFSalesReport\PDFSalesReport.csproj", "{ED91224D-FC4E-4271-946C-DF7584E92DC8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -98,6 +102,18 @@ Global
 		{D8F0BD50-454C-4907-B90A-73500376A07A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{D8F0BD50-454C-4907-B90A-73500376A07A}.Release|x64.ActiveCfg = Release|Any CPU
 		{D8F0BD50-454C-4907-B90A-73500376A07A}.Release|x86.ActiveCfg = Release|Any CPU
+		{ED91224D-FC4E-4271-946C-DF7584E92DC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED91224D-FC4E-4271-946C-DF7584E92DC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED91224D-FC4E-4271-946C-DF7584E92DC8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{ED91224D-FC4E-4271-946C-DF7584E92DC8}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{ED91224D-FC4E-4271-946C-DF7584E92DC8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{ED91224D-FC4E-4271-946C-DF7584E92DC8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ED91224D-FC4E-4271-946C-DF7584E92DC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED91224D-FC4E-4271-946C-DF7584E92DC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED91224D-FC4E-4271-946C-DF7584E92DC8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{ED91224D-FC4E-4271-946C-DF7584E92DC8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{ED91224D-FC4E-4271-946C-DF7584E92DC8}.Release|x64.ActiveCfg = Release|Any CPU
+		{ED91224D-FC4E-4271-946C-DF7584E92DC8}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

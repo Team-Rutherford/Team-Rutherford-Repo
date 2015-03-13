@@ -1,9 +1,13 @@
 ﻿namespace MarketSystemModel
 {
     using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Data.Entity.Design;
 
-    public class Sale
+    public class Sale : IEntity
     {
+        [Key]
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public int ProductId { get; set; }

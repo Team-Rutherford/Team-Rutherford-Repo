@@ -59,13 +59,7 @@
             throw new NotImplementedException();
         }
 
-        public void MySqlToExcel()
-        {
-            // TODO
-            throw new NotImplementedException();
-        }
-
-        public void SqliteToExcel()
+        public void SqliteMySqlToExcel()
         {
             // TODO
             throw new NotImplementedException();

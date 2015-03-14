@@ -11,6 +11,7 @@ namespace MarketSystemModel
         private ICollection<Measure> measures;
         private ICollection<Supermarket> supermarkets;
         private ICollection<Sale> sales;
+        private ICollection<VendorExpenses> vendorExpenses;
 
         public MarketData()
         {
@@ -19,6 +20,7 @@ namespace MarketSystemModel
             this.measures = new Collection<Measure>();
             this.supermarkets = new  Collection<Supermarket>();
             this.sales = new Collection<Sale>();
+            this.vendorExpenses = new Collection<VendorExpenses>();
         }
 
         public ICollection<Product> Products
@@ -46,5 +48,10 @@ namespace MarketSystemModel
         {
             get { return sales; }
          }
+
+        public ICollection<VendorExpenses> VendorExpenses
+        {
+            get { return this.vendorExpenses; }
+        }
     }
 }

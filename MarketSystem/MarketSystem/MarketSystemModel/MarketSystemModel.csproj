@@ -102,6 +102,7 @@
     <Compile Include="Sale.cs" />
     <Compile Include="ITransmitter.cs" />
     <Compile Include="Vendor.cs" />
+    <Compile Include="VendorExpenses.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

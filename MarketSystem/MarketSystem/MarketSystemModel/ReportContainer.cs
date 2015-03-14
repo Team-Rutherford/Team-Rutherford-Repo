@@ -6,5 +6,6 @@
     {
         public List<ReportData> SaleReport { get; set; }
         public string SupermarkeName { get; set; }
+        public string PrductName { get; set; }
     }
 }

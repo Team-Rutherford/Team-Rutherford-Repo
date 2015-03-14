@@ -12,8 +12,8 @@
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
-        public DbSet<Measure> Measeres { get; set; }
-        public DbSet<Supermarket> Markets { get; set; }
+        public DbSet<Measure> Measures { get; set; }
+        public DbSet<Supermarket> Supermarkets { get; set; }
         public DbSet<Sale> Sales { get; set; }
     }
 }

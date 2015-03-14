@@ -114,9 +114,13 @@
       <Project>{4225fc75-b7fe-423a-b4ff-59c51143e8d7}</Project>
       <Name>MsSqlDatabase</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OracleDatabase\OracleDatabase.csproj">
-      <Project>{6ace6f73-dd8e-456e-abaf-a383f9762e49}</Project>
-      <Name>OracleDatabase</Name>
+    <ProjectReference Include="..\MySqlDatabase\MySqlDatabase.csproj">
+      <Project>{bdaba127-b934-400e-9a5f-3ba283aa9e28}</Project>
+      <Name>MySqlDatabase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestingJasen\JasenOracle.csproj">
+      <Project>{f3b7a8cb-4b7d-4921-8432-63e92aa11f6b}</Project>
+      <Name>JasenOracle</Name>
     </ProjectReference>
     <ProjectReference Include="..\XmlSalesReport\XmlSalesReport.csproj">
       <Project>{d8f0bd50-454c-4907-b90a-73500376a07a}</Project>

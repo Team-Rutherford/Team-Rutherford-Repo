@@ -138,6 +138,10 @@
       <Project>{3da24b12-fe85-4b23-8e26-ab9482a4305b}</Project>
       <Name>MarketSystemModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TestingJasen\JasenOracle.csproj">
+      <Project>{f3b7a8cb-4b7d-4921-8432-63e92aa11f6b}</Project>
+      <Name>JasenOracle</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

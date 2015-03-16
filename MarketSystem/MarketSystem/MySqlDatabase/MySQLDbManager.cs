@@ -3,15 +3,70 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MarketSystemModel;
+using System.Data.Entity;
+using MsSqlDatabase;
 
 namespace MySqlDatabase
 {
-    using System.Collections.ObjectModel;
-    using MarketSystemModel;
-    using System.Data.Entity;
-    using MsSqlDatabase;
-    class MySQLDbManager : DbManager
+    public class MySQLDbManager
     {
-       
+        public static void SaveData(IMarketData marketData)
+        {
+            try
+            {                
+
+                var db = new MySQLMarketContext();
+
+                var newVendorIds = marketData.Vendors.Select(v => v.Id).ToList()
+                    .Except(db.Vendors.Select(ve => ve.Id).ToList()).ToList();
+                var newVendorEntityes = marketData.Vendors.Where(x => newVendorIds.Contains(x.Id)).ToList();
+                db.Vendors.AddRange(newVendorEntityes);
+
+                var newSupermarketsId = marketData.Supermarkets.Select(v => v.Id).ToList()
+                    .Except(db.Supermarkets.Select(ve => ve.Id).ToList()).ToList();
+                var newSupermarketsEntityes = marketData.Supermarkets.Where(x => newSupermarketsId.Contains(x.Id)).ToList();
+                db.Supermarkets.AddRange(newSupermarketsEntityes);
+
+                var newMeasuresId = marketData.Measures.Select(v => v.Id).ToList()
+                    .Except(db.Measures.Select(ve => ve.Id).ToList()).ToList();
+                var newMeasuresEntityes = marketData.Measures.Where(x => newMeasuresId.Contains(x.Id)).ToList();
+                db.Measures.AddRange(newMeasuresEntityes);
+
+                var newProductsId = marketData.Products.Select(v => v.Id).ToList()
+                    .Except(db.Products.Select(ve => ve.Id).ToList()).ToList();
+                var newProductsEntityes = marketData.Products.Where(x => newProductsId.Contains(x.Id)).ToList();
+                db.Products.AddRange(newProductsEntityes);
+
+                var newSales = SaleDuplicateChecker(marketData.Sales);
+                db.Sales.AddRange(newSales);
+
+                db.SaveChanges();
+            }
+            catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
+            {
+                Console.WriteLine(ex);
+            }
+            catch (MySql.Data.MySqlClient.MySqlException mySqlEx)
+            {
+                Console.WriteLine(mySqlEx);
+            }
+        }
+
+        private static ICollection<Sale> SaleDuplicateChecker(ICollection<Sale> newSales)
+        {
+            var db = new MySQLMarketContext();
+            var result = new List<Sale>() { };
+            foreach (var newSale in newSales)
+            {
+                var existInDatabase = db.Sales.Any(s => (s.Date == newSale.Date) &&
+                                                  (s.Supermarket.Name == newSale.Supermarket.Name)).ToString();
+                if (existInDatabase == "False")
+                {
+                    result.Add(newSale);
+                }
+            }
+            return result;
+        }
     }
 }

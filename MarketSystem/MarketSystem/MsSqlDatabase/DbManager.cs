@@ -5,7 +5,6 @@ using System.Linq;
 using System.Data;
 using System.Collections.ObjectModel;
 
-
 namespace MsSqlDatabase
 {
     using MarketSystemModel;
@@ -24,17 +23,17 @@ namespace MsSqlDatabase
                 db.Vendors.AddRange(newVendorEntityes);
 
                 var newSupermarketsId = marketData.Supermarkets.Select(v => v.Id).ToList()
-                    .Except(db.Vendors.Select(ve => ve.Id).ToList()).ToList();
+                    .Except(db.Supermarkets.Select(ve => ve.Id).ToList()).ToList();
                 var newSupermarketsEntityes = marketData.Supermarkets.Where(x => newSupermarketsId.Contains(x.Id)).ToList();
                 db.Supermarkets.AddRange(newSupermarketsEntityes);
 
                 var newMeasuresId = marketData.Measures.Select(v => v.Id).ToList()
-                    .Except(db.Vendors.Select(ve => ve.Id).ToList()).ToList();
+                    .Except(db.Measures.Select(ve => ve.Id).ToList()).ToList();
                 var newMeasuresEntityes = marketData.Measures.Where(x => newMeasuresId.Contains(x.Id)).ToList();
                 db.Measures.AddRange(newMeasuresEntityes);
 
                 var newProductsId = marketData.Products.Select(v => v.Id).ToList()
-                    .Except(db.Vendors.Select(ve => ve.Id).ToList()).ToList();
+                    .Except(db.Products.Select(ve => ve.Id).ToList()).ToList();
                 var newProductsEntityes = marketData.Products.Where(x => newProductsId.Contains(x.Id)).ToList();
                 db.Products.AddRange(newProductsEntityes);
 

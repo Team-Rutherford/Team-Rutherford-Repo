@@ -42,7 +42,7 @@ namespace JasenOracle
             var product = new Product
             {
                 Id = oracleProduct.ID,
-                Name = oracleProduct.PRODUCTNAME,
+                Name = oracleProduct.PRODUCTNAME.TrimEnd(),
                 Price = (double)oracleProduct.PRICE,
                 MeasureId = oracleProduct.MEASUREID,
                 VendorId = oracleProduct.VENDORID
@@ -56,7 +56,7 @@ namespace JasenOracle
             var measure = new Measure
             {
                 Id = oracleMeasure.ID,
-                Name = oracleMeasure.MEASURENAME
+                Name = oracleMeasure.MEASURENAME.TrimEnd()
             };
 
             return measure;
@@ -67,7 +67,7 @@ namespace JasenOracle
             var supeermarket = new Supermarket()
             {
                 Id = oracleSupermarket.ID,
-                Name = oracleSupermarket.SUPERMARKET_NAME
+                Name = oracleSupermarket.SUPERMARKET_NAME.TrimEnd()
             };
 
             return supeermarket;
@@ -78,7 +78,7 @@ namespace JasenOracle
             var vendor = new Vendor
             {
                 Id = oracleVendor.ID,
-                Name = oracleVendor.VENDORNAME
+                Name = oracleVendor.VENDORNAME.TrimEnd()
             };
 
             return vendor;

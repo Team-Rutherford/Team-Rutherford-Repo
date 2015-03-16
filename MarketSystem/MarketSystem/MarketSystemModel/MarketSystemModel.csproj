@@ -90,6 +90,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContextType.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="IMarketData.cs" />
     <Compile Include="ReportContainer.cs" />

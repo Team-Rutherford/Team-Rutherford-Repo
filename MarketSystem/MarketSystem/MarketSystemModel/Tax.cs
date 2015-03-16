@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MarketSystemModel
 {
-    class Tax
+    public class Tax
     {
         [Key]
         public int Id { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 using System.Collections.ObjectModel;
 
 namespace TestingProject
@@ -12,6 +13,7 @@ namespace TestingProject
         private ICollection<Measure> measures;
         private ICollection<Supermarket> supermarkets;
         private ICollection<Sale> sales;
+        private ICollection<VendorExpenses> vendorExpenses;
 
         public MarketData()
         {
@@ -50,6 +52,12 @@ namespace TestingProject
         {
             get { return sales; }
             set { sales = value; }
+        }
+
+        public ICollection<VendorExpenses> VendorExpenses
+        {
+            get { return vendorExpenses; }
+            set { vendorExpenses = value; }
         }
     }
 }

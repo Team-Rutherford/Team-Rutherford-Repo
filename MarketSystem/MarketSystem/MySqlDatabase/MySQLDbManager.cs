@@ -49,7 +49,7 @@ namespace MySqlDatabase
             }
             catch (MySql.Data.MySqlClient.MySqlException mySqlEx)
             {
-                Console.WriteLine(mySqlEx);
+                
             }
         }
 

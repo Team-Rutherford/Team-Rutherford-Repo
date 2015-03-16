@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8E9ECBAB-B78D-40DF-8257-D3E93F2D39A4}</ProjectGuid>
+    <ProjectGuid>{574A8588-7178-4036-B818-8682D6BC37C6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MySQLTryDB</RootNamespace>
-    <AssemblyName>MySQLTryDB</AssemblyName>
+    <RootNamespace>MarketSystemController</RootNamespace>
+    <AssemblyName>MarketSystemController</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,15 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,52 +39,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="Market.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Market.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Market.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Market.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Market.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Market.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="measure.cs">
-      <DependentUpon>Market.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Controller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Market.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Market.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
-    <None Include="Market.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Market.edmx</DependentUpon>
-      <LastGenOutput>Market.Context.cs</LastGenOutput>
-    </None>
-    <None Include="Market.edmx.diagram">
-      <DependentUpon>Market.edmx</DependentUpon>
-    </None>
-    <None Include="Market.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Market.edmx</DependentUpon>
-      <LastGenOutput>Market.cs</LastGenOutput>
-    </None>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <ProjectReference Include="..\MarketSystemModel\MarketSystemModel.csproj">
+      <Project>{3da24b12-fe85-4b23-8e26-ab9482a4305b}</Project>
+      <Name>MarketSystemModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MsSqlDatabase\MsSqlDatabase.csproj">
+      <Project>{4225fc75-b7fe-423a-b4ff-59c51143e8d7}</Project>
+      <Name>MsSqlDatabase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MySqlDatabase\MySqlDatabase.csproj">
+      <Project>{bdaba127-b934-400e-9a5f-3ba283aa9e28}</Project>
+      <Name>MySqlDatabase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestingJasen\JasenOracle.csproj">
+      <Project>{f3b7a8cb-4b7d-4921-8432-63e92aa11f6b}</Project>
+      <Name>JasenOracle</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XMLImport\XmlImport.csproj">
+      <Project>{0cfc9602-99aa-4f40-9394-7014a8c73dab}</Project>
+      <Name>XmlImport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XmlSalesReport\XmlSalesReport.csproj">
+      <Project>{d8f0bd50-454c-4907-b90a-73500376a07a}</Project>
+      <Name>XmlSalesReport</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -77,10 +77,6 @@
       <Project>{3da24b12-fe85-4b23-8e26-ab9482a4305b}</Project>
       <Name>MarketSystemModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MongoDbDatabase\MongoDbDatabase.csproj">
-      <Project>{377a66f7-c097-46cd-928b-f10b71a25ca8}</Project>
-      <Name>MongoDbDatabase</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MsSqlDatabase\MsSqlDatabase.csproj">
       <Project>{4225fc75-b7fe-423a-b4ff-59c51143e8d7}</Project>
       <Name>MsSqlDatabase</Name>

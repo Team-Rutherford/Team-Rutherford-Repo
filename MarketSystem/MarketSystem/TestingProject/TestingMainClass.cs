@@ -4,7 +4,7 @@
     using System.Linq;
     //using OracleDatabase;
     using XmlSalesReport;
-    using  System.Xml.Linq;
+    using System.Xml.Linq;
     using MsSqlDatabase;
     using System.Collections.Generic;
     using JasenOracle;
@@ -13,7 +13,7 @@
     using System.Data.Entity.Core.Metadata.Edm;
     using System.IO;
    // using MongoDB.Bson;
-    using MongoDbDatabase;
+   // using MongoDbDatabase;
     using System.Data.Entity;
     using MySql.Data.Entity;
     using MySql.Data.MySqlClient;
@@ -54,19 +54,11 @@
             //Console.WriteLine(result[0].InnerText);
 
             // ::::::::::::  ADD DATA FROM MsSQLDB TO MySQLDb :::::::::::::::
-            //DbConfiguration.SetConfiguration(new MySqlEFConfiguration());
-            
-            var MsDb = new DbMarketContext();
-            var MySqlDb = new MySQLMarketContext();
 
-            var data = new MarketData();
+            var transferData = DbManager.LoadData();
+            MySQLDbManager.SaveData(transferData);
 
-            MsDb.Measures.ToList().ForEach(m => data.Measures.Add(m));
-            //MsDb.Products.ForEachAsync(m => data.Products.Add(m)).Wait();
-            //MsDb.Sales.ForEachAsync(m => data.Sales.Add(m)).Wait();
-            //MsDb.Supermarkets.ForEachAsync(m => data.Supermarkets.Add(m)).Wait();
-            //MsDb.Vendors.ForEachAsync(m => data.Vendors.Add(m)).Wait();
-            MySQLDbManager.SaveData(data);
+            // ::::::::::::  
 
         }
    }

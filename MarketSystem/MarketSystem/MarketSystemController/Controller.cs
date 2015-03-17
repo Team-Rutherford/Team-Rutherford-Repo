@@ -1,4 +1,6 @@
-﻿namespace MarketSystemController
+﻿using PDFSalesReport;
+
+namespace MarketSystemController
 {
     using System;
     using System.Collections.Generic;
@@ -6,61 +8,65 @@
     using System.Text;
     using System.Threading.Tasks;
     using MarketSystemModel;
-   // using OracleDatabase;
-    using JasenOracle;
-   // using MongoDbDatabase;
+    using OracleDatabase;
+    using MongoDbDatabase;
     using MsSqlDatabase;
     using XMLImport;
     using XmlSalesReport;
 
-    public class Controller
+    public static class Controller
     {
-        public void OracleToMsSql()
+        public static void OracleToMsSql()
         {
             var oracleTransmitter = new OracleTransmiter();
             var data = oracleTransmitter.GetData();
             DbManager.SaveData(data);
         }
 
-        public void ZipExcelToMsSql()
+        public static void ZipExcelToMsSql(string fileName)
         {
             // TODO
             throw new NotImplementedException();
         }
 
-        public void XmlToMsSql(string pathToExpensesReport)
+        public static void XmlToMsSql(string pathToExpensesReport)
         {
             var xmlTransmitter = new XmlVendorExpensesImport(pathToExpensesReport);
             var data = xmlTransmitter.GetData();
             DbManager.SaveData(data);
         }
 
-        public void MsSqlToPdf()
+        public static void MsSqlToPdf(string fileName, DateTime startDate, DateTime endDate)
         {
-            // TODO
-            throw new NotImplementedException();
+            ToPdf.SaleReportToPdf(fileName);
         }
 
-        public void MsSqlToXml(string pathToReport)
+        public static void MsSqlToXml(string fileName, DateTime startDate, DateTime endDate )
         {
-            var data = DbManager.GetSalesGroupByVendorAndDate();
+            var data = DbManager.GetSalesGroupByVendorAndDate(startDate, endDate);
             var xmlGenerator = new XmlSalesReportByVendor(data);
-            xmlGenerator.Save(pathToReport);
+            xmlGenerator.Save(fileName);
         }
 
-        public void MsSqlToMongoDb()
+        public static void JsonFilesToMongoDb(string directoryName)
+        {
+            var data = Json.GetProductReportsFromDirectory(directoryName);
+            MongoDbManager.AddSalesProductReportsFromFilesToDatabase(data);
+        }
+
+        public static void MsSqlToJson(string directoryName, DateTime startDate, DateTime endDate)
+        {
+            var data = DbManager.GetSalesOfEachProductForPeriod(startDate, endDate);
+            Json.SaveRaportToJsonFiles(directoryName, data);
+        }
+
+        public static void MsSqlToMySql()
         {
             // TODO
             throw new NotImplementedException();
         }
 
-        public void MsSqlToMySql()
-        {
-            // TODO
-            throw new NotImplementedException();
-        }
-
-        public void SqliteMySqlToExcel()
+        public static void SqliteMySqlToExcel()
         {
             // TODO
             throw new NotImplementedException();

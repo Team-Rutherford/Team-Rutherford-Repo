@@ -13,11 +13,12 @@
 
     public class ToPdf
     {
-        public static void SaleReportToPdf()
+        public static void SaleReportToPdf(string fileName)
         {
             Document document = new Document(iTextSharp.text.PageSize.LETTER, 10, 10, 35, 35);
             StringBuilder sb = new StringBuilder();
-            PdfWriter pdf = PdfWriter.GetInstance(document, new FileStream(@"../../../../../../Reports/SalesReportPdf.pdf", FileMode.Create));
+            var file = new FileStream(fileName + ".pdf", FileMode.Create);
+            PdfWriter pdf = PdfWriter.GetInstance(document, file);
             document.Open();
 
             var db = new DbMarketContext();
@@ -25,8 +26,8 @@
             var report =
                 from pr in db.Products
                 join sl in db.Sales on pr.Id equals sl.ProductId
-                join sm in db.Markets on sl.SupermarketId equals sm.Id
-                join me in db.Measeres on pr.Measure.Name equals me.Name
+                join sm in db.Supermarkets on sl.SupermarketId equals sm.Id
+                join me in db.Measures on pr.Measure.Name equals me.Name
                 select new
                 {
                     productName = pr.Name,

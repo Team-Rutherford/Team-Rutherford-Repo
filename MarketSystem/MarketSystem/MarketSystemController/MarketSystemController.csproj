@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AC736B1B-8736-4712-8658-A6167D9ABE9B}</ProjectGuid>
+    <ProjectGuid>{574A8588-7178-4036-B818-8682D6BC37C6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MarketSystemController</RootNamespace>

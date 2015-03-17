@@ -124,6 +124,33 @@ namespace MsSqlDatabase
 
             return data;
         }
+
+        public static IList<ReportContainer> GetSalesForPeriod()
+        {
+            var db = new DbMarketContext();
+            
+            var sales = db.Sales
+                //.Where(s => s.Date >= startDate && s.Date <= endDate)
+                .GroupBy(s => s.Date)
+                .Select(g => new ReportContainer
+                {
+                    SaleReport = g.Select(s => new ReportData
+                    {
+                        ProductName = s.Product.Name,
+                        Quantity = s.Quantity,
+                        Measure = s.Product.Measure.Name,
+                        Price = s.Product.Price,
+                        VendorName = s.Supermarket.Name,
+                        TotalSum = s.Product.Price * s.Quantity,
+                        Date = s.Date,
+                        Id = s.ProductId,
+                    })
+                    .ToList()
+                })
+                .ToList();
+
+            return sales;
+        }
     }
 }
 

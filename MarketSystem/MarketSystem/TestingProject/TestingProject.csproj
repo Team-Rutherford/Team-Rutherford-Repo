@@ -88,6 +88,10 @@
       <Project>{6ace6f73-dd8e-456e-abaf-a383f9762e49}</Project>
       <Name>OracleDatabase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PDFSalesReport\PDFSalesReport.csproj">
+      <Project>{ed91224d-fc4e-4271-946c-df7584e92dc8}</Project>
+      <Name>PDFSalesReport</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TestingJasen\JasenOracle.csproj">
       <Project>{f3b7a8cb-4b7d-4921-8432-63e92aa11f6b}</Project>
       <Name>JasenOracle</Name>

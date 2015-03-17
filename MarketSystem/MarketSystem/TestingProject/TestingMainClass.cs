@@ -18,6 +18,8 @@
     using MySql.Data.Entity;
     using MySql.Data.MySqlClient;
 
+    using PDFSalesReport;
+
 
     class TestingMainClass
     { 
@@ -55,12 +57,35 @@
 
             // ::::::::::::  ADD DATA FROM MsSQLDB TO MySQLDb :::::::::::::::
 
-            var transferData = DbManager.LoadData();
-            MySQLDbManager.SaveData(transferData);
+            //var transferData = DbManager.LoadData();
+            //MySQLDbManager.SaveData(transferData);
+
+            // :::::::::::::: GET PDF SALES REPORT ::::::::::::::::::::::::::::::::::
+            //var db = new DbMarketContext();
+            
+            //    foreach (var VARIABLE in db.Measures)
+            //    {
+            //        Console.WriteLine(VARIABLE.Name);
+            //    }
+
+            var data = DbManager.GetSalesForPeriod();
+            PDFSalesReport.PdfAggregatedSalesReport.PdfSaleReportForPeriod(data);
+
+            //foreach (var reportContainer in data)
+            //{
+            //    Console.WriteLine(reportContainer.SaleReport);
+
+            //    foreach (var v in reportContainer.SaleReport)
+            //    {
+            //        Console.WriteLine(v.Date);
+            //    }
+            //}
+            //ToPdf.SaleReportToPdf();
+
 
             // ::::::::::::  
-
         }
+
    }
 }
 

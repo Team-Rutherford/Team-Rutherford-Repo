@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Data;
 using System.Collections.ObjectModel;
+
 
 namespace MsSqlDatabase
 {
@@ -23,22 +25,21 @@ namespace MsSqlDatabase
                 db.Vendors.AddRange(newVendorEntityes);
 
                 var newSupermarketsId = marketData.Supermarkets.Select(v => v.Id).ToList()
-                    .Except(db.Supermarkets.Select(ve => ve.Id).ToList()).ToList();
+                    .Except(db.Vendors.Select(ve => ve.Id).ToList()).ToList();
                 var newSupermarketsEntityes = marketData.Supermarkets.Where(x => newSupermarketsId.Contains(x.Id)).ToList();
                 db.Supermarkets.AddRange(newSupermarketsEntityes);
 
                 var newMeasuresId = marketData.Measures.Select(v => v.Id).ToList()
-                    .Except(db.Measures.Select(ve => ve.Id).ToList()).ToList();
+                    .Except(db.Vendors.Select(ve => ve.Id).ToList()).ToList();
                 var newMeasuresEntityes = marketData.Measures.Where(x => newMeasuresId.Contains(x.Id)).ToList();
                 db.Measures.AddRange(newMeasuresEntityes);
 
                 var newProductsId = marketData.Products.Select(v => v.Id).ToList()
-                    .Except(db.Products.Select(ve => ve.Id).ToList()).ToList();
+                    .Except(db.Vendors.Select(ve => ve.Id).ToList()).ToList();
                 var newProductsEntityes = marketData.Products.Where(x => newProductsId.Contains(x.Id)).ToList();
                 db.Products.AddRange(newProductsEntityes);
 
-                var newSales = SaleDuplicateChecker(marketData.Sales);
-                db.Sales.AddRange(newSales);
+                AddSales(marketData.Sales.ToList());
 
                 db.SaveChanges();
             }
@@ -57,32 +58,36 @@ namespace MsSqlDatabase
             return filteredEntityes;
         }
 
-        private static ICollection<Sale> SaleDuplicateChecker(ICollection<Sale> newSales)
+        private static void AddSales(ICollection<Sale> newSales)
         {
             var db = new DbMarketContext();
-            var result = new List<Sale>(){};
+            var result = new List<Sale>();
             foreach (var newSale in newSales)
-            {       
+            {
                 var existInDatabase = db.Sales.Any(s => (s.Date == newSale.Date) &&
-                                                  (s.Supermarket.Name == newSale.Supermarket.Name)).ToString();
-                if (existInDatabase == "False")
+                                                  (s.Supermarket.Name == newSale.Supermarket.Name));
+                if (!existInDatabase)
                 {
-                    result.Add(newSale);
-                }                
+                    db.Sales.Add(newSale);
+                }
             }
-            return result;
         }
 
-        public static IList<ReportContainer> GetSalesGroupByVendorAndDate()
+        public static IList<ReportContainer> GetSalesGroupByVendorAndDate(DateTime startDate, DateTime endDate)
         {
             var db = new DbMarketContext();
 
             var sales = db.Sales
-                .Select(s => new {Suppermarket = s.Supermarket.Name, s.Date, TotalPrice = (s.Product.Price * s.Quantity)})
+                .Where(s => s.Date >= startDate && s.Date <= endDate)
+                .Select(s => new { Suppermarket = s.Supermarket.Name, s.Date, TotalPrice = (s.Product.Price * s.Quantity) })
                 .GroupBy(s => s.Suppermarket)
-                .Select(g => new ReportContainer {SupermarkeName = g.Key, SaleReport = g.GroupBy(s => s.Date)
-                    .Select(gd => new ReportData { Date = gd.Key, TotalSum = gd.Sum(s => s.TotalPrice)})
-                    .ToList()})
+                .Select(g => new ReportContainer
+                {
+                    SupermarkeName = g.Key,
+                    SaleReport = g.GroupBy(s => s.Date)
+                        .Select(gd => new ReportData { Date = gd.Key, TotalSum = gd.Sum(s => s.TotalPrice) })
+                        .ToList()
+                })
                 .ToList();
 
             return sales;
@@ -91,38 +96,43 @@ namespace MsSqlDatabase
         public static IList<ReportContainer> GetSalesOfEachProductForPeriod(DateTime startDate, DateTime endDate)
         {
             var db = new DbMarketContext();
-
-            var sales = db.Sales
-                //.Where(s => s.Date >= startDate && s.Date <= endDate)
-                .GroupBy(s => s.Product.Name)
-                .Select(g => new ReportContainer {
-                    PrductName = g.Key, 
-                    SaleReport = g.Select(s => new ReportData
+            try
+            {
+                var sales = db.Sales
+                    .Where(s => s.Date >= startDate && s.Date <= endDate)
+                    .GroupBy(s => s.Product.Name)
+                    .Select(g => new ReportContainer
                     {
-                        Id = s.ProductId,
-                        Price = s.Product.Price,
-                        Quantity = s.Quantity,
-                        VendorName = s.Product.Vendor.Name
+                        PrductName = g.Key,
+                        SaleReport = g.Select(s => new ReportData
+                        {
+                            Id = s.ProductId,
+                            ProductName = g.Key,
+                            Price = s.Product.Price,
+                            Quantity = s.Quantity,
+                            VendorName = s.Product.Vendor.Name
+                        })
+                        .ToList()
                     })
-                    .ToList()
-                })
-                .ToList();
+                    .ToList();
 
-            return sales;
+                return sales;
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                throw new DirectoryNotFoundException("Directory not fount.");
+            }
         }
 
-        public static IMarketData LoadData()
+        public static IEnumerable<ReportData> GetAllProducts()
         {
-            var MsDb = new DbMarketContext();
-            var data = new MarketData();
-            MsDb.Measures.ForEachAsync(m => data.Measures.Add(m)).Wait();
-            MsDb.Products.ForEachAsync(p => data.Products.Add(p)).Wait();
-            MsDb.Sales.ForEachAsync(s => data.Sales.Add(s)).Wait();
-            MsDb.Supermarkets.ForEachAsync(sup => data.Supermarkets.Add(sup)).Wait();
-            MsDb.Vendors.ForEachAsync(v => data.Vendors.Add(v)).Wait();
-            MsDb.VendorExpanses.ForEachAsync(vs => data.VendorExpenses.Add(vs)).Wait();
+            var db = new DbMarketContext();
 
-            return data;
+            var products = db.Products
+                .Select(p => new ReportData { ProductName = p.Name, Id = p.Id })
+                .ToList();
+
+            return products;
         }
     }
 }

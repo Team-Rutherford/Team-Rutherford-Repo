@@ -41,6 +41,9 @@ namespace MySqlDatabase
                 var newSales = SaleDuplicateChecker(marketData.Sales);
                 db.Sales.AddRange(newSales);
 
+                var newVendorExpenses = ExpenseDuplicateChacker(marketData.VendorExpenses);
+                db.VendorExpenses.AddRange(newVendorExpenses);
+
                 db.SaveChanges();
             }
             catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
@@ -64,6 +67,22 @@ namespace MySqlDatabase
                 if (existInDatabase == "False")
                 {
                     result.Add(newSale);
+                }
+            }
+            return result;
+        }
+
+        private static ICollection<VendorExpense> ExpenseDuplicateChacker(ICollection<VendorExpense> newExpenses)
+        {
+            var db = new MySQLMarketContext();
+            var result = new List<VendorExpense>() { };
+            foreach (var newExpense in newExpenses)
+            {
+                var existInDatabase = db.VendorExpenses.Any(x => (x.Date == newExpense.Date) &&
+                                                  (x.Vendor.Id == newExpense.Vendor.Id)).ToString();
+                if (existInDatabase == "False")
+                {
+                    result.Add(newExpense);
                 }
             }
             return result;

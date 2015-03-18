@@ -2,10 +2,10 @@
 alter system flush shared_pool;
 
 /* VIEW SERVER HOST NAME */
-select host_name from v$instance;
+--select host_name from v$instance;
 
 /* CHECK CURREN SID (session ID) */
-select sys_context('userenv','sessionid') Session_ID from dual;
+--select sys_context('userenv','sessionid') Session_ID from dual;
 
 /* VENDORS TABLE CREATION */ ------------------------------------------------------------------------------
 DROP TABLE VENDORS;
@@ -228,6 +228,7 @@ BEGIN
     END IF;
   END COLUMN_SEQUENCES;
 END;
+/
 /* ---------------------------- INSERT SUPERMARKETS --------------------------------------------- */
 INSERT INTO SUPERMARKETS(SUPERMARKET_NAME)
 VALUES ('Bourgas – Plaza');

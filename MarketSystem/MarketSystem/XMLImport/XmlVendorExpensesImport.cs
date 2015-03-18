@@ -45,10 +45,10 @@
                     string dateString = expense.Attributes.GetNamedItem("month").InnerText;
                     DateTime parsedDate = DateTime.ParseExact(dateString, DateFormat, null, DateTimeStyles.None);
 
-                    decimal expenseMoney = Decimal.Parse(expense.InnerText);
+                    double expenseMoney = Double.Parse(expense.InnerText);
 
                     // create expense report by collected data
-                    var exp = new VendorExpenses();
+                    var exp = new VendorExpense();
                     exp.Vendor = vendor;
                     exp.Date = parsedDate;
                     exp.Expenses = expenseMoney;

@@ -11,12 +11,16 @@
     using MarketSystemModel;
     using MySqlDatabase;
     using System.Data.Entity.Core.Metadata.Edm;
+    using System.Runtime.CompilerServices;
     using System.IO;
    // using MongoDB.Bson;
    // using MongoDbDatabase;
     using System.Data.Entity;
     using MySql.Data.Entity;
     using MySql.Data.MySqlClient;
+    using SqLiteDatabase;
+    using XlsxFinancialReport;
+    using MsSqlDatabase.Migrations;
 
 
     class TestingMainClass
@@ -31,7 +35,7 @@
             //var oracleDb = new Entities();
 
             // ::::::::::::   ADD DATA FROM ORACLE TO MsSQLDB ::::::::::::::::
-
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<DbMarketContext, MsConfiguration>());
             //var transmiter = new OracleTransmiter();
             //var marketData = transmiter.GetData();
 
@@ -54,12 +58,28 @@
             //Console.WriteLine(result[0].InnerText);
 
             // ::::::::::::  ADD DATA FROM MsSQLDB TO MySQLDb :::::::::::::::
+            //var transferData = DbManager.LoadData();
+            //MySQLDbManager.SaveData(transferData);
 
-            var transferData = DbManager.LoadData();
-            MySQLDbManager.SaveData(transferData);
+            // :::::::::::: ADD Product NAMES TO SQLITE DATA ::::::::::::::
 
-            // ::::::::::::  
+            var mSdata = DbManager.LoadData();
 
+            SqLiteManager.SaveData(mSdata);
+
+            // ::::::::::: MANAGE TAXES ::::::::::::
+
+            //SqLiteManager.ManageTaxes();
+
+            // :::::::::::::  XLSX REPORT ::::::::::::::
+
+            XlsxManager.FinancialReportByVendor();
+
+            //
+            //var br = new List<double>() { 1.4, 2.2, 3.1, 4.1, 5.3 };
+
+            //double a = br.Aggregate((aa, b) => aa + b);
+            //Console.WriteLine(a);
         }
    }
 }

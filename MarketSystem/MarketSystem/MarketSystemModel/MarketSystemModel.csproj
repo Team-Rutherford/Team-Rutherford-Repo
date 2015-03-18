@@ -103,6 +103,7 @@
     <Compile Include="ITransmitter.cs" />
     <Compile Include="Tax.cs" />
     <Compile Include="Vendor.cs" />
+    <Compile Include="VendorReportContainer.cs" />
     <Compile Include="VendorExpenses.cs" />
   </ItemGroup>
   <ItemGroup>

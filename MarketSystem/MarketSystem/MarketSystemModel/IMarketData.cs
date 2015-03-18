@@ -9,6 +9,6 @@
         ICollection<Measure> Measures { get; }
         ICollection<Supermarket> Supermarkets { get; }
         ICollection<Sale> Sales { get; }
-        ICollection<VendorExpenses> VendorExpenses { get; }
+        ICollection<VendorExpense> VendorExpenses { get; }
     }
 }

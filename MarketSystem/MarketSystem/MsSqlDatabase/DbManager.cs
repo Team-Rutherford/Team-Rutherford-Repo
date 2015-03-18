@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Data;
 using System.Collections.ObjectModel;
+using MsSqlDatabase.Migrations;
 
 namespace MsSqlDatabase
 {
@@ -13,6 +14,7 @@ namespace MsSqlDatabase
     {
         public static void SaveData(IMarketData marketData)
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DbMarketContext, MsConfiguration>());
             try
             {
                 var db = new DbMarketContext();
@@ -59,6 +61,7 @@ namespace MsSqlDatabase
 
         private static ICollection<Sale> SaleDuplicateChecker(ICollection<Sale> newSales)
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DbMarketContext, MsConfiguration>());
             var db = new DbMarketContext();
             var result = new List<Sale>(){};
             foreach (var newSale in newSales)
@@ -113,6 +116,7 @@ namespace MsSqlDatabase
 
         public static IMarketData LoadData()
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DbMarketContext, MsConfiguration>());
             var MsDb = new DbMarketContext();
             var data = new MarketData();
             MsDb.Measures.ForEachAsync(m => data.Measures.Add(m)).Wait();

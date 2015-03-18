@@ -57,6 +57,7 @@ namespace ConsoleClient
                 {
                     if (nextProcess >= 1 && nextProcess <= 3)
                     {
+                        Console.Clear();
                         Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++++++");
                         Console.WriteLine("+                 Supermarkets Chain              +");
                         Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++++++");
@@ -66,25 +67,29 @@ namespace ConsoleClient
                     }
 
                     ProcessController(1,
-                        "1. Data from Oracle database to MSSQL Database\n Do You want to transfer data /yes (Y), no (N) or exit (E)/: ",
+                        "1. Data from Oracle database to MSSQL Database\n Do You want to transfer data /yes (Y), no (N)/: ",
                         ref nextProcess,
                         delegate(string inputInfo)
                         {
                             Controller.OracleToMsSql();
-                        });
+                        },
+                        null,
+                        MainMenu);
 
                     ProcessController(2,
-                        "2. Data from Zip files to MSSQL Database\n\nDo You want to transfer data /yes (Y), no (N) or exit (E)/: ",
+                        "2. Data from Zip files to MSSQL Database\n\nDo You want to transfer data /yes (Y), no (N)/: ",
                         ref nextProcess,
                         Controller.ZipExcelToMsSql,
-                        "Input file name: ");
+                        "Input file name: ",
+                        MainMenu);
 
 
                     ProcessController(3,
-                        "3. Data from XML files to MSSQL database\n\nDo You want to transfer data /yes (Y), no (N) or exit (E)/: ",
+                        "3. Data from XML files to MSSQL database\n\nDo You want to transfer data /yes (Y), no (N)/: ",
                         ref nextProcess,
                         Controller.XmlToMsSql,
-                        "Input file name: ");
+                        "Input file name: ",
+                        MainMenu);
 
 
                     if (nextProcess == ReportMenu)
@@ -114,28 +119,28 @@ namespace ConsoleClient
                     }
 
                     ProcessController(5,
-                        "1. Create reports for the sales of each product for given period in JSON format. \n\nDo You want create report? /yes (Y), no (N) or exit (E)/: ",
+                        "1. Create reports for the sales of each product for given period in JSON format. \n\nDo You want create report? /yes (Y) or no (N)/: ",
                         ref nextProcess,
                         delegate(string directory, DateTime starDate, DateTime endDate)
                         {
                             Controller.MsSqlToJson(directory, starDate, endDate);
                             Controller.JsonFilesToMongoDb(directory);
                         },
-                        "Input repository's directory",
+                        "Enter repository's directory",
                         ReportMenu);
 
                     ProcessController(6,
-                        "2. Report in XML format holding the sales by vendor for given period. \n\nDo You want create report? /yes (Y), no (N) or exit (E)/: ",
+                        "2. Report in XML format holding the sales by vendor for given period. \n\nDo You want create report? /yes (Y) or no (N)/: ",
                         ref nextProcess,
                         Controller.MsSqlToXml,
-                        "Input file name",
+                        "Enter file name: ",
                         ReportMenu);
 
                     ProcessController(7,
-                        "3. Reports summarizing the sales information for given period to PDF format. \n\nDo You want create report? /yes (Y), no (N) or exit (E)/: ",
+                        "3. Reports summarizing the sales information for given period to PDF format. \n\nDo You want create report? /yes (Y) or no (N)/: ",
                         ref nextProcess,
                         Controller.MsSqlToPdf,
-                        "Input file name",
+                        "Enter file name: ",
                         ReportMenu);
 
                 }

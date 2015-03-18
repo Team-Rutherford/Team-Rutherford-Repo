@@ -1,6 +1,4 @@
-﻿using PDFSalesReport;
-
-namespace MarketSystemController
+﻿namespace MarketSystemController
 {
     using System;
     using System.Collections.Generic;
@@ -13,6 +11,7 @@ namespace MarketSystemController
     using MsSqlDatabase;
     using XMLImport;
     using XmlSalesReport;
+	using PDFSalesReport;
 
     public static class Controller
     {
@@ -38,7 +37,8 @@ namespace MarketSystemController
 
         public static void MsSqlToPdf(string fileName, DateTime startDate, DateTime endDate)
         {
-            ToPdf.SaleReportToPdf(fileName);
+            var data = DbManager.GetSalesForPeriod(startDate, endDate);
+            PdfAggregatedSalesReport.PdfSaleReportForPeriod(fileName, data);
         }
 
         public static void MsSqlToXml(string fileName, DateTime startDate, DateTime endDate )

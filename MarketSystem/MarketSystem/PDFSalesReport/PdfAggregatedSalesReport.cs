@@ -12,11 +12,11 @@ namespace PDFSalesReport
 {
     public class PdfAggregatedSalesReport
     {
-        public static void PdfSaleReportForPeriod(IList<ReportContainer> inputData)
+        public static void PdfSaleReportForPeriod(String fileName, IList<ReportContainer> inputData)
         {
             Document document = new Document(iTextSharp.text.PageSize.LETTER, 10, 10, 35, 35);
             StringBuilder sb = new StringBuilder();
-            PdfWriter pdf = PdfWriter.GetInstance(document, new FileStream(@"../../../../../Reports/SalesReportPdf.pdf", FileMode.Create));
+            PdfWriter pdf = PdfWriter.GetInstance(document, new FileStream(fileName, FileMode.Create));
             document.Open();
 
             int tableColounms = 5;

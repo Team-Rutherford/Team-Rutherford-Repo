@@ -148,13 +148,13 @@ namespace MsSqlDatabase
 
             return data;
         }
-        
-        public static IList<ReportContainer> GetSalesForPeriod()
+
+        public static IList<ReportContainer> GetSalesForPeriod(DateTime startDate, DateTime endDate)
         {
             var db = new DbMarketContext();
             
             var sales = db.Sales
-                //.Where(s => s.Date >= startDate && s.Date <= endDate)
+                .Where(s => s.Date >= startDate && s.Date <= endDate)
                 .GroupBy(s => s.Date)
                 .Select(g => new ReportContainer
                 {

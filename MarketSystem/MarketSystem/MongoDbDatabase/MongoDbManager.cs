@@ -1,4 +1,7 @@
-﻿namespace MongoDbDatabase
+﻿using System.Collections.Generic;
+using MarketSystemModel;
+
+namespace MongoDbDatabase
 {
     using MongoDB.Bson;
     using MongoDB.Driver;
@@ -8,9 +11,8 @@
 
     public static class MongoDbManager
     {
-        public static void AddSalesProductReportsFromFilesToDatabase(string directoryName)
+        public static void AddSalesProductReportsFromFilesToDatabase(IEnumerable<ProductReportClass> reports)
         {
-            var reports = Json.GetProductReportsFromDirectory(directoryName);
             var db = new MongoDb("MarketSystem");
             db.CreateCollection<ProductReportClass>("SaleProducts");
             foreach (var report in reports)

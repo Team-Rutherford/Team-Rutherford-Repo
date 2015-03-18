@@ -63,17 +63,17 @@
 
             // :::::::::::: ADD Product NAMES TO SQLITE DATA ::::::::::::::
 
-            var mSdata = DbManager.LoadData();
+            //var mSdata = DbManager.LoadData();
 
-            SqLiteManager.SaveData(mSdata);
+            //SqLiteManager.SaveData(mSdata);
 
-            // ::::::::::: MANAGE TAXES ::::::::::::
+            // ::::::::::: SQLITE MANAGE TAXES ::::::::::::
 
-            //SqLiteManager.ManageTaxes();
+            SqLiteManager.ManageTaxes();
 
             // :::::::::::::  XLSX REPORT ::::::::::::::
 
-            XlsxManager.FinancialReportByVendor();
+            //XlsxManager.FinancialReportByVendor();
 
             //
             //var br = new List<double>() { 1.4, 2.2, 3.1, 4.1, 5.3 };

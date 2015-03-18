@@ -63,7 +63,8 @@ namespace MySqlDatabase
             foreach (var newSale in newSales)
             {
                 var existInDatabase = db.Sales.Any(s => (s.Date == newSale.Date) &&
-                                                  (s.Supermarket.Name == newSale.Supermarket.Name)).ToString();
+                                                  (s.Supermarket.Name == newSale.Supermarket.Name) &&
+                                                  (s.ProductId == newSale.ProductId)).ToString();
                 if (existInDatabase == "False")
                 {
                     result.Add(newSale);

@@ -41,18 +41,22 @@ namespace XlsxFinancialReport
         private static double CalculateTotalVendorTaxes(Vendor vendor)
         {
             var mySqlDb = new MySQLMarketContext();
+
             var allVendorSaledProducts = mySqlDb.Products
                 .Where(p => p.Vendor.Id == vendor.Id).ToList();
+
             var sqLiteDb = new SqLiteContext();        
 
             double taxes = 0;
             double saleIncomes = 0;
             double currentTax = 0;
+
             List<double> incomes = new List<double>();
 
             foreach (var product in allVendorSaledProducts)
             {
                 incomes = mySqlDb.Sales.Where(s => s.Product.Id == product.Id).Select(s => s.Quantity).ToList();
+
                 if (incomes.Count > 0)
                 {
                     saleIncomes = incomes.Aggregate((a, b) => a + b);
@@ -62,9 +66,10 @@ namespace XlsxFinancialReport
                     .Where(t => t.Id == product.Id)
                     .Select(t => t.TaxPercentage)
                     .FirstOrDefault();
+
                 currentTax = currentTax / 100;
 
-                taxes += (saleIncomes * currentTax) + saleIncomes;
+                taxes += saleIncomes * currentTax;
             }
 
             return taxes;
@@ -94,6 +99,7 @@ namespace XlsxFinancialReport
             foreach (var product in allProducts)
             {
                 quantityes = sales.Where(s => s.ProductId == product.Id).Select(s => s.Quantity).ToList();
+
                 if (quantityes.Count > 0)
                 {
                     incomes = quantityes.Aggregate((a, b) => a + b) * product.Price;

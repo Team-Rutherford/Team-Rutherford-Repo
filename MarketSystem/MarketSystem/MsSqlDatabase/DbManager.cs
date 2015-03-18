@@ -61,13 +61,13 @@ namespace MsSqlDatabase
 
         private static ICollection<Sale> SaleDuplicateChecker(ICollection<Sale> newSales)
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DbMarketContext, MsConfiguration>());
             var db = new DbMarketContext();
             var result = new List<Sale>(){};
             foreach (var newSale in newSales)
             {       
                 var existInDatabase = db.Sales.Any(s => (s.Date == newSale.Date) &&
-                                                  (s.Supermarket.Name == newSale.Supermarket.Name)).ToString();
+                                                  (s.Supermarket.Name == newSale.Supermarket.Name) &&
+                                                  (s.ProductId == newSale.ProductId)).ToString();
                 if (existInDatabase == "False")
                 {
                     result.Add(newSale);
@@ -76,16 +76,21 @@ namespace MsSqlDatabase
             return result;
         }
 
-        public static IList<ReportContainer> GetSalesGroupByVendorAndDate()
+        public static IList<ReportContainer> GetSalesGroupByVendorAndDate(DateTime startDate, DateTime endDate)
         {
             var db = new DbMarketContext();
 
             var sales = db.Sales
-                .Select(s => new {Suppermarket = s.Supermarket.Name, s.Date, TotalPrice = (s.Product.Price * s.Quantity)})
+                .Where(s => s.Date >= startDate && s.Date <= endDate)
+                .Select(s => new { Suppermarket = s.Supermarket.Name, s.Date, TotalPrice = (s.Product.Price * s.Quantity) })
                 .GroupBy(s => s.Suppermarket)
-                .Select(g => new ReportContainer {SupermarkeName = g.Key, SaleReport = g.GroupBy(s => s.Date)
-                    .Select(gd => new ReportData { Date = gd.Key, TotalSum = gd.Sum(s => s.TotalPrice)})
-                    .ToList()})
+                .Select(g => new ReportContainer
+                {
+                    SupermarkeName = g.Key,
+                    SaleReport = g.GroupBy(s => s.Date)
+                        .Select(gd => new ReportData { Date = gd.Key, TotalSum = gd.Sum(s => s.TotalPrice) })
+                        .ToList()
+                })
                 .ToList();
 
             return sales;
@@ -116,7 +121,6 @@ namespace MsSqlDatabase
 
         public static IMarketData LoadData()
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DbMarketContext, MsConfiguration>());
             var MsDb = new DbMarketContext();
             var data = new MarketData();
             MsDb.Measures.ForEachAsync(m => data.Measures.Add(m)).Wait();
@@ -127,6 +131,33 @@ namespace MsSqlDatabase
             MsDb.VendorExpanses.ForEachAsync(vs => data.VendorExpenses.Add(vs)).Wait();
 
             return data;
+        }
+
+        public static IList<ReportContainer> GetSalesForPeriod(DateTime startDate, DateTime endDate)
+        {
+            var db = new DbMarketContext();
+
+            var sales = db.Sales
+                .Where(s => s.Date >= startDate && s.Date <= endDate)
+                .GroupBy(s => s.Date)
+                .Select(g => new ReportContainer
+                {
+                    SaleReport = g.Select(s => new ReportData
+                    {
+                        ProductName = s.Product.Name,
+                        Quantity = s.Quantity,
+                        Measure = s.Product.Measure.Name,
+                        Price = s.Product.Price,
+                        VendorName = s.Supermarket.Name,
+                        TotalSum = s.Product.Price * s.Quantity,
+                        Date = s.Date,
+                        Id = s.ProductId,
+                    })
+                    .ToList()
+                })
+                .ToList();
+
+            return sales;
         }
     }
 }

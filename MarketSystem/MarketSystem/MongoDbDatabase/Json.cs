@@ -71,13 +71,14 @@ namespace MongoDbDatabase
         public static IEnumerable<ProductReportClass> GetProductReportsFromDirectory(string directoryName)
         {
             var products = new Collection<ProductReportClass>();
-            var files = Directory.EnumerateFiles(directoryName, "*.json", SearchOption.TopDirectoryOnly);
-            foreach (var file in files)
-            {
-                var json = ReadJsonFromFile(file);
-                var product = Parse<ProductReportClass>(json);
-                products.Add(product);
-            }
+
+                var files = Directory.EnumerateFiles(directoryName, "*.json", SearchOption.TopDirectoryOnly);
+                foreach (var file in files)
+                {
+                    var json = ReadJsonFromFile(file);
+                    var product = Parse<ProductReportClass>(json);
+                    products.Add(product);
+                }
 
             return products;
         }

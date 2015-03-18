@@ -82,7 +82,7 @@
       <Name>PDFSalesReport</Name>
     </ProjectReference>
     <ProjectReference Include="..\XMLImport\XmlImport.csproj">
-      <Project>{0CFC9602-99AA-4F40-9394-7014A8C73DAB}</Project>
+      <Project>{0cfc9602-99aa-4f40-9394-7014a8c73dab}</Project>
       <Name>XmlImport</Name>
     </ProjectReference>
     <ProjectReference Include="..\XmlSalesReport\XmlSalesReport.csproj">

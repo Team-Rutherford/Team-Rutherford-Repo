@@ -3,7 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class VendorExpense
+    public class VendorExpenses
     {
         [Key]
         public int Id { get; set; }

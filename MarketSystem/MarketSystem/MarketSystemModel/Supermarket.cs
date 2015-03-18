@@ -1,6 +1,7 @@
 ﻿namespace MarketSystemModel
 {
     using System.ComponentModel.DataAnnotations;
+
     public class Supermarket : IEntity
     {
         [Key]

@@ -21,6 +21,6 @@ namespace MySqlDatabase
         public DbSet<Measure> Measures { get; set; }
         public DbSet<Supermarket> Supermarkets { get; set; }
         public DbSet<Sale> Sales { get; set; }
-        public DbSet<VendorExpense> VendorExpenses { get; set; }
+        public DbSet<VendorExpenses> VendorExpenses { get; set; }
     }
 }

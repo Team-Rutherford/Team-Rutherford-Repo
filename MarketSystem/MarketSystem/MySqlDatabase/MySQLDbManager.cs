@@ -73,10 +73,10 @@ namespace MySqlDatabase
             return result;
         }
 
-        private static ICollection<VendorExpense> ExpenseDuplicateChacker(ICollection<VendorExpense> newExpenses)
+        private static ICollection<VendorExpenses> ExpenseDuplicateChacker(ICollection<VendorExpenses> newExpenses)
         {
             var db = new MySQLMarketContext();
-            var result = new List<VendorExpense>() { };
+            var result = new List<VendorExpenses>() { };
             foreach (var newExpense in newExpenses)
             {
                 var existInDatabase = db.VendorExpenses.Any(x => (x.Date == newExpense.Date) &&

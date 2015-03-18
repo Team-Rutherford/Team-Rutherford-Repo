@@ -17,7 +17,6 @@
         public double Quantity { get; set; }
         public double Price { get; set; }
         public double TotalSum { get; set; }
-        public int TaxPercentage { get; set; }
         public DateTime? Date { get; set; }
     }
 }

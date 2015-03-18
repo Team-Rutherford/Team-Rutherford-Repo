@@ -58,8 +58,8 @@
             //Console.WriteLine(result[0].InnerText);
 
             // ::::::::::::  ADD DATA FROM MsSQLDB TO MySQLDb :::::::::::::::
-            //var transferData = DbManager.LoadData();
-            //MySQLDbManager.SaveData(transferData);
+            var transferData = DbManager.LoadData();
+            MySQLDbManager.SaveData(transferData);
 
             // :::::::::::: ADD Product NAMES TO SQLITE DATA ::::::::::::::
 
@@ -69,7 +69,7 @@
 
             // ::::::::::: SQLITE MANAGE TAXES ::::::::::::
 
-            SqLiteManager.ManageTaxes();
+            //SqLiteManager.ManageTaxes();
 
             // :::::::::::::  XLSX REPORT ::::::::::::::
 

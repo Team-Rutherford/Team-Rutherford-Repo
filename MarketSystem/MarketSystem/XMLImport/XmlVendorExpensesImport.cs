@@ -48,7 +48,7 @@
                     double expenseMoney = Double.Parse(expense.InnerText);
 
                     // create expense report by collected data
-                    var exp = new VendorExpense();
+                    var exp = new VendorExpenses();
                     exp.Vendor = vendor;
                     exp.Date = parsedDate;
                     exp.Expenses = expenseMoney;

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.Entity;
-
-namespace MarketSystemModel
+﻿namespace MarketSystemModel
 {
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+	using System.Data.Entity;
+
     public class MarketData : IMarketData
     {
         private ICollection<Product> products;
@@ -11,7 +11,7 @@ namespace MarketSystemModel
         private ICollection<Measure> measures;
         private ICollection<Supermarket> supermarkets;
         private ICollection<Sale> sales;
-        private ICollection<VendorExpense> vendorExpenses;
+        private ICollection<VendorExpenses> vendorExpenses;
         private ICollection<Tax> taxes;
 
         public MarketData()
@@ -19,9 +19,9 @@ namespace MarketSystemModel
             this.products = new Collection<Product>();
             this.vendors = new Collection<Vendor>();
             this.measures = new Collection<Measure>();
-            this.supermarkets = new  Collection<Supermarket>();
+            this.supermarkets = new Collection<Supermarket>();
             this.sales = new Collection<Sale>();
-            this.vendorExpenses = new Collection<VendorExpense>();
+            this.vendorExpenses = new Collection<VendorExpenses>();
             this.taxes = new Collection<Tax>();
         }
 
@@ -43,15 +43,14 @@ namespace MarketSystemModel
         public ICollection<Supermarket> Supermarkets
         {
             get { return supermarkets; }
-         }
+        }
 
         public ICollection<Sale> Sales
-
         {
             get { return sales; }
-         }
+        }
 
-        public ICollection<VendorExpense> VendorExpenses
+        public ICollection<VendorExpenses> VendorExpenses
         {
             get { return this.vendorExpenses; }
         }

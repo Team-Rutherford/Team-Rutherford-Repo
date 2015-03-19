@@ -18,13 +18,13 @@ namespace XlsxFinancialReport
 {
     public class XlsxManager
     {
-        public static void FinancialReportByVendor()
+        public static void FinancialReportByVendor(string fileName)
         {
             List<VendorReportContainer> reports = FillVendorReports();
-            PrintFinancialReportByVendor(reports);
+            PrintFinancialReportByVendor(reports, fileName);
         }
 
-        public static void PrintFinancialReportByVendor(List<VendorReportContainer> reportsData)
+        public static void PrintFinancialReportByVendor(List<VendorReportContainer> reportsData, string fileName)
         {
             using (ExcelPackage p = new ExcelPackage())
             {
@@ -101,7 +101,7 @@ namespace XlsxFinancialReport
 
                 // Save the Excel file
                  Byte[] bin = p.GetAsByteArray();
-                 File.WriteAllBytes(@"C:\Users\Jazzy\Documents\GitHub\Team-Rutherford-Repo\Reports\FinancialReportByVendor.xlsx", bin);
+                 File.WriteAllBytes(fileName, bin);
             }
         }
 

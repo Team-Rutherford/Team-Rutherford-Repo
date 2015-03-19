@@ -81,6 +81,10 @@
       <Project>{ed91224d-fc4e-4271-946c-df7584e92dc8}</Project>
       <Name>PDFSalesReport</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XlsxFinancialReport\XlsxFinancialReport.csproj">
+      <Project>{1e98a500-f37b-4ba5-a746-201398521649}</Project>
+      <Name>XlsxFinancialReport</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XMLImport\XmlImport.csproj">
       <Project>{0cfc9602-99aa-4f40-9394-7014a8c73dab}</Project>
       <Name>XmlImport</Name>
@@ -88,6 +92,10 @@
     <ProjectReference Include="..\XmlSalesReport\XmlSalesReport.csproj">
       <Project>{D8F0BD50-454C-4907-B90A-73500376A07A}</Project>
       <Name>XmlSalesReport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZipFiles\ZipFiles.csproj">
+      <Project>{66FF0951-A549-4535-BFD1-62455790D60D}</Project>
+      <Name>ZipFiles</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

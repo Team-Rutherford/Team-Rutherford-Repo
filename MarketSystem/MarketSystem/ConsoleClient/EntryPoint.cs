@@ -143,6 +143,12 @@ namespace ConsoleClient
                         "Enter file name: ",
                         ReportMenu);
 
+                    ProcessController(8,
+                        "4. Financial results report to Excel file \n\nDo You want create report? /yes (Y) or no (N)/: ",
+                        ref nextProcess,
+                        Controller.SqliteMySqlToExcel,
+                        "Enter file name: ",
+                        ReportMenu);
                 }
                 catch (Exception ex)
                 {

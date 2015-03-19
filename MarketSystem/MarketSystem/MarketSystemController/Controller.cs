@@ -1,4 +1,7 @@
-﻿namespace MarketSystemController
+﻿using XlsxFinancialReport;
+using ZipExcelExtractor;
+
+namespace MarketSystemController
 {
     using System;
     using System.Collections.Generic;
@@ -24,8 +27,9 @@
 
         public static void ZipExcelToMsSql(string fileName)
         {
-            // TODO
-            throw new NotImplementedException();
+            var zipTransmiter = new Extractor(fileName);
+            var data = zipTransmiter.GetData();
+            DbManager.SaveData(data);
         }
 
         public static void XmlToMsSql(string pathToExpensesReport)
@@ -66,10 +70,9 @@
             throw new NotImplementedException();
         }
 
-        public static void SqliteMySqlToExcel()
+        public static void SqliteMySqlToExcel(string fileName)
         {
-            // TODO
-            throw new NotImplementedException();
+            XlsxManager.FinancialReportByVendor(fileName);
         }
     }
 }

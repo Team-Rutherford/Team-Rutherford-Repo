@@ -58,8 +58,8 @@
             //Console.WriteLine(result[0].InnerText);
 
             // ::::::::::::  ADD DATA FROM MsSQLDB TO MySQLDb :::::::::::::::
-            var transferData = DbManager.LoadData();
-            MySQLDbManager.SaveData(transferData);
+            //var transferData = DbManager.LoadData();
+            //MySQLDbManager.SaveData(transferData);
 
             // :::::::::::: ADD Product NAMES TO SQLITE DATA ::::::::::::::
 
@@ -73,13 +73,8 @@
 
             // :::::::::::::  XLSX REPORT ::::::::::::::
 
-            //XlsxManager.FinancialReportByVendor();
+            XlsxManager.FinancialReportByVendor();
 
-            //
-            //var br = new List<double>() { 1.4, 2.2, 3.1, 4.1, 5.3 };
-
-            //double a = br.Aggregate((aa, b) => aa + b);
-            //Console.WriteLine(a);
         }
    }
 }

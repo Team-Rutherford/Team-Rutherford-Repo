@@ -12,6 +12,8 @@ namespace SqLiteDatabase
 {
     public class SqLiteManager
     {
+        protected SqLiteContext SqLiteDb = new SqLiteContext();
+
         public static void SaveData(IMarketData inputData)
         {
             var db = new SqLiteContext();
@@ -85,6 +87,16 @@ namespace SqLiteDatabase
             }
 
             return data;
+        }
+
+        public static double TaxPercentage(Product product)
+        {
+            var SqLiteDb = new SqLiteContext();
+            double result = SqLiteDb.TaxInformations
+                    .Where(t => t.Id == product.Id)
+                    .Select(t => t.TaxPercentage)
+                    .FirstOrDefault();
+            return result / 100;
         }
     }
 }

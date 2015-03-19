@@ -7,6 +7,11 @@ using MarketSystemModel;
 using MySqlDatabase;
 using SqLiteDatabase;
 using System.Data.Entity;
+using System.IO;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System.Drawing;
+
 
 
 namespace XlsxFinancialReport
@@ -15,14 +20,95 @@ namespace XlsxFinancialReport
     {
         public static void FinancialReportByVendor()
         {
-            var MySqlDb = new MySQLMarketContext();
-            var vendors = MySqlDb.Vendors;
-            var sales = MySqlDb.Sales;
-            var sqLiteDb = new SqLiteContext();
-            var taxes = sqLiteDb.TaxInformations;
+            List<VendorReportContainer> reports = FillVendorReports();
+            PrintFinancialReportByVendor(reports);
+        }
 
-            List<VendorReportContainer> reports = new List<VendorReportContainer>();           
+        public static void PrintFinancialReportByVendor(List<VendorReportContainer> reportsData)
+        {
+            using (ExcelPackage p = new ExcelPackage())
+            {
+                p.Workbook.Properties.Author = "Team Rutherford";
+                p.Workbook.Properties.Title = "Finantial Report By Vendor";
+                p.Workbook.Properties.Company = "Soft Uni";
 
+                p.Workbook.Worksheets.Add("Finantial Report By Vendor" + DateTime.Now.Date.ToString());
+                ExcelWorksheet workSheet = p.Workbook.Worksheets[1]; // 1 is the position of the worksheet
+                workSheet.Name = "Finantial Report By Vendor";
+                
+                // Set the cell values
+                var vendorHeadCell = workSheet.Cells[1, 1];
+                var incomesHeadCell = workSheet.Cells[1, 2];
+                var expensesHeadCell = workSheet.Cells[1, 3];
+                var taxsesHeadCell = workSheet.Cells[1, 4];
+                var financialResultHead = workSheet.Cells[1, 5];
+
+                vendorHeadCell.Value = "Vendor";
+                incomesHeadCell.Value = "Incomes";
+                expensesHeadCell.Value = "Expenses";
+                taxsesHeadCell.Value = "Total Taxes";
+                financialResultHead.Value = "Financial Result";
+
+                var headerCells = workSheet.Cells[1, 1, 1, 5].Style;
+                headerCells.WrapText = true;
+                headerCells.VerticalAlignment = ExcelVerticalAlignment.Center;
+                headerCells.Indent = 1;
+                headerCells.Font.SetFromFont(new Font("Calibri", 11, FontStyle.Bold));
+                headerCells.Font.Color.SetColor(Color.Black);
+                headerCells.Fill.PatternType = ExcelFillStyle.Solid;
+                headerCells.Fill.BackgroundColor.SetColor(Color.LightGray);
+
+                // Column indexes for clarity
+                int vendorColIndex = 1;
+                int incomesColIndex = 2;
+                int expensesColIndex = 3;
+                int taxesColIndex = 4;
+                int financialResultColIndex = 5;
+
+                int dataRowIndex = 2; // Row 1 is the header
+
+                foreach (var report in reportsData)
+                {
+                    // Vendor
+                    var vendorCell = workSheet.Cells[dataRowIndex, vendorColIndex];
+                    vendorCell.Value = report.Vendor.Name;
+                   
+                    // Incomes
+                    var incomesCell = workSheet.Cells[dataRowIndex, incomesColIndex];
+                    incomesCell.Value = report.Incomes;
+
+                    // Expenses
+                    var expensesCell = workSheet.Cells[dataRowIndex, expensesColIndex];
+                    expensesCell.Value = report.Expenses;
+
+                    // Expenses
+                    var taxsesCell = workSheet.Cells[dataRowIndex, taxesColIndex];
+                    taxsesCell.Value = report.TotalTaxes;
+
+                    // Expenses
+                    var financialResultCell = workSheet.Cells[dataRowIndex, financialResultColIndex];
+                    financialResultCell.Value = report.FinancialResult;
+
+                    var financialResultCellStyle = financialResultCell.Style.Font;
+                    financialResultCellStyle.SetFromFont(new Font("Calibri", 11, FontStyle.Bold));
+                    financialResultCellStyle.Color.SetColor(Color.Black);
+
+                    dataRowIndex++;
+                }              
+                // Adjust column width
+                int maxLength = reportsData.Select(d => d.Vendor.Name).Max(n => n.Count(c => char.IsLetterOrDigit(c)));
+                workSheet.Column(vendorColIndex).Width = maxLength + 2;
+
+                // Save the Excel file
+                 Byte[] bin = p.GetAsByteArray();
+                 File.WriteAllBytes(@"C:\Users\Jazzy\Documents\GitHub\Team-Rutherford-Repo\Reports\FinancialReportByVendor.xlsx", bin);
+            }
+        }
+
+        private static List<VendorReportContainer> FillVendorReports()
+        {
+            List<VendorReportContainer> reports = new List<VendorReportContainer>();
+            var vendors = MySQLDbManager.GetAllVendors();
             foreach (var vendor in vendors)
             {
                 VendorReportContainer report = new VendorReportContainer();
@@ -35,39 +121,20 @@ namespace XlsxFinancialReport
                 reports.Add(report);
             }
 
-            Console.WriteLine();
+            return reports;
         }
 
-        private static double CalculateTotalVendorTaxes(Vendor vendor)
+        public static double CalculateTotalVendorTaxes(Vendor vendor)
         {
-            var mySqlDb = new MySQLMarketContext();
-
-            var allVendorSaledProducts = mySqlDb.Products
-                .Where(p => p.Vendor.Id == vendor.Id).ToList();
-
-            var sqLiteDb = new SqLiteContext();        
-
+            var allVendorSaledProducts = MySQLDbManager.ProductsByVendor(vendor); 
             double taxes = 0;
             double saleIncomes = 0;
             double currentTax = 0;
 
-            List<double> incomes = new List<double>();
-
             foreach (var product in allVendorSaledProducts)
             {
-                incomes = mySqlDb.Sales.Where(s => s.Product.Id == product.Id).Select(s => s.Quantity).ToList();
-
-                if (incomes.Count > 0)
-                {
-                    saleIncomes = incomes.Aggregate((a, b) => a + b);
-                }    
-
-                currentTax = sqLiteDb.TaxInformations
-                    .Where(t => t.Id == product.Id)
-                    .Select(t => t.TaxPercentage)
-                    .FirstOrDefault();
-
-                currentTax = currentTax / 100;
+                saleIncomes = MySQLDbManager.IncomesByProduct(product);
+                currentTax = SqLiteManager.TaxPercentage(product);
 
                 taxes += saleIncomes * currentTax;
             }

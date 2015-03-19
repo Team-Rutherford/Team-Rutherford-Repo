@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Collections.ObjectModel;
 using MsSqlDatabase.Migrations;
 
@@ -121,14 +122,18 @@ namespace MsSqlDatabase
 
         public static IMarketData LoadData()
         {
-            var MsDb = new DbMarketContext();
             var data = new MarketData();
-            MsDb.Measures.ForEachAsync(m => data.Measures.Add(m)).Wait();
-            MsDb.Products.ForEachAsync(p => data.Products.Add(p)).Wait();
-            MsDb.Sales.ForEachAsync(s => data.Sales.Add(s)).Wait();
-            MsDb.Supermarkets.ForEachAsync(sup => data.Supermarkets.Add(sup)).Wait();
-            MsDb.Vendors.ForEachAsync(v => data.Vendors.Add(v)).Wait();
-            MsDb.VendorExpanses.ForEachAsync(vs => data.VendorExpenses.Add(vs)).Wait();
+
+            using (var MsDb = new DbMarketContext())
+            {
+                MsDb.Measures.ForEachAsync(m => data.Measures.Add(m)).Wait();
+                MsDb.Products.ForEachAsync(p => data.Products.Add(p)).Wait();
+                MsDb.Sales.ForEachAsync(s => data.Sales.Add(s)).Wait();
+                MsDb.Supermarkets.ForEachAsync(sup => data.Supermarkets.Add(sup)).Wait();
+                MsDb.Vendors.ForEachAsync(v => data.Vendors.Add(v)).Wait();
+                MsDb.VendorExpanses.ForEachAsync(vs => data.VendorExpenses.Add(vs)).Wait();
+            }    
+
 
             return data;
         }

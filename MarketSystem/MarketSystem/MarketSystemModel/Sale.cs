@@ -15,5 +15,17 @@
         public int SupermarketId { get; set; }
         public virtual Supermarket Supermarket { get; set; }
         public double Quantity { get; set; }
+
+        public bool Equals(Sale other)
+        {
+            if ((this.ProductId == other.ProductId) &&
+                (this.Date.Date == other.Date.Date) &&
+                (this.SupermarketId == other.SupermarketId))
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

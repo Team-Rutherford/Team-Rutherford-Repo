@@ -102,6 +102,10 @@
       <Project>{6ace6f73-dd8e-456e-abaf-a383f9762e49}</Project>
       <Name>OracleDatabase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PDFSalesReport\PDFSalesReport.csproj">
+      <Project>{ed91224d-fc4e-4271-946c-df7584e92dc8}</Project>
+      <Name>PDFSalesReport</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SqLiteDatabase\SqLiteDatabase.csproj">
       <Project>{69335681-f8b3-484b-8b05-78c567093084}</Project>
       <Name>SqLiteDatabase</Name>

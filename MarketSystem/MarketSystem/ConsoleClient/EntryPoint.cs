@@ -18,12 +18,17 @@ namespace ConsoleClient
         static void Main()
         {
             var nextProcess = MainMenu;
+            var isError = false;
 
             while (true)
             {
                 if (nextProcess == MainMenu)
                 {
-                    Console.Clear();
+                    if (!isError)
+                    {
+                        Console.Clear();
+                    }
+                    
                     Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++++++");
                     Console.WriteLine("+                 Supermarkets Chain              +");
                     Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++++++");
@@ -57,7 +62,11 @@ namespace ConsoleClient
                 {
                     if (nextProcess >= 1 && nextProcess <= 3)
                     {
-                        Console.Clear();
+                        if (!isError)
+                        {
+                            Console.Clear();
+                        }
+                    
                         Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++++++");
                         Console.WriteLine("+                 Supermarkets Chain              +");
                         Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++++++");
@@ -72,24 +81,20 @@ namespace ConsoleClient
                         delegate(string inputInfo)
                         {
                             Controller.OracleToMsSql();
-                        },
-                        null,
-                        MainMenu);
+                        });
 
                     ProcessController(2,
                         "2. Data from Zip files to MSSQL Database\n\nDo You want to transfer data /yes (Y), no (N)/: ",
                         ref nextProcess,
                         Controller.ZipExcelToMsSql,
-                        "Input file name: ",
-                        MainMenu);
+                        "Input file name: ");
 
 
                     ProcessController(3,
                         "3. Data from XML files to MSSQL database\n\nDo You want to transfer data /yes (Y), no (N)/: ",
                         ref nextProcess,
                         Controller.XmlToMsSql,
-                        "Input file name: ",
-                        MainMenu);
+                        "Input file name: ");
 
                     ProcessController(4,
                         "4. Data from MSSQL database to MySQL Database\n\nDo You want to transfer data /yes (Y), no (N)/: ",
@@ -99,11 +104,15 @@ namespace ConsoleClient
                             Controller.MsSqlToMySql();
                         },
                         null,
-                        MainMenu);
+                        ReportMenu);
 
                     if (nextProcess == ReportMenu)
                     {
-                        Console.Clear();
+                        if (!isError)
+                        {
+                            Console.Clear();
+                        }
+                    
                         Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++++++");
                         Console.WriteLine("+                 Supermarkets Chain              +");
                         Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++++++");
@@ -165,7 +174,8 @@ namespace ConsoleClient
                     {
                         Console.Clear();
                         Console.WriteLine("Error: " + ex.Message);
-                        Console.WriteLine();                       
+                        Console.WriteLine();
+                        isError = true;
                     }
                 }
             }
@@ -198,6 +208,7 @@ namespace ConsoleClient
 
             Console.WriteLine("\nPlease wait...");
             controller(input);
+            nextProcess++;
             if (returnNumberProcess == -1)
             {
                 nextProcess++;

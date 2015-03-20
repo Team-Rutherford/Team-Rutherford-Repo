@@ -73,6 +73,10 @@
       <Project>{4225fc75-b7fe-423a-b4ff-59c51143e8d7}</Project>
       <Name>MsSqlDatabase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MySqlDatabase\MySqlDatabase.csproj">
+      <Project>{bdaba127-b934-400e-9a5f-3ba283aa9e28}</Project>
+      <Name>MySqlDatabase</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OracleDatabase\OracleDatabase.csproj">
       <Project>{6ACE6F73-DD8E-456E-ABAF-A383F9762E49}</Project>
       <Name>OracleDatabase</Name>
@@ -80,6 +84,10 @@
     <ProjectReference Include="..\PDFSalesReport\PDFSalesReport.csproj">
       <Project>{ed91224d-fc4e-4271-946c-df7584e92dc8}</Project>
       <Name>PDFSalesReport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqLiteDatabase\SqLiteDatabase.csproj">
+      <Project>{69335681-f8b3-484b-8b05-78c567093084}</Project>
+      <Name>SqLiteDatabase</Name>
     </ProjectReference>
     <ProjectReference Include="..\XlsxFinancialReport\XlsxFinancialReport.csproj">
       <Project>{1e98a500-f37b-4ba5-a746-201398521649}</Project>

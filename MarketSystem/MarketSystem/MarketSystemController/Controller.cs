@@ -1,4 +1,5 @@
-﻿using XlsxFinancialReport;
+﻿using MySqlDatabase;
+using XlsxFinancialReport;
 using ZipExcelExtractor;
 
 namespace MarketSystemController
@@ -66,8 +67,8 @@ namespace MarketSystemController
 
         public static void MsSqlToMySql()
         {
-            // TODO
-            throw new NotImplementedException();
+            var data = DbManager.LoadData();
+            MySQLDbManager.SaveData(data);
         }
 
         public static void SqliteMySqlToExcel(string fileName)

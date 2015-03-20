@@ -11,7 +11,7 @@ namespace ConsoleClient
     class EntryPoint
     {
         private const int MainMenu = 0;
-        private const int ReportMenu = 4;
+        private const int ReportMenu = 5;
         public delegate void ExecuteController(string fileName);
         public delegate void ExecuteControllerForDatePeriod(string fileName, DateTime stertDate, DateTime endDate);
 
@@ -42,7 +42,7 @@ namespace ConsoleClient
                             nextProcess = 1;
                             break;
                         case "2": 
-                            nextProcess = 4;
+                            nextProcess = 5;
                             break;
                         case "3":
                             return;
@@ -91,6 +91,15 @@ namespace ConsoleClient
                         "Input file name: ",
                         MainMenu);
 
+                    ProcessController(4,
+                        "4. Data from MSSQL database to MySQL Database\n\nDo You want to transfer data /yes (Y), no (N)/: ",
+                        ref nextProcess,
+                        delegate(string inputInfo)
+                        {
+                            Controller.MsSqlToMySql();
+                        },
+                        null,
+                        MainMenu);
 
                     if (nextProcess == ReportMenu)
                     {
@@ -109,8 +118,8 @@ namespace ConsoleClient
                         Console.WriteLine();
 
                         Console.Write("Choose number of report (1 - 5): ");
-                        nextProcess = int.Parse(Console.ReadLine()) + 4;
-                        if (nextProcess == 9)
+                        nextProcess = int.Parse(Console.ReadLine()) + 5;
+                        if (nextProcess == 10)
                         {
                             nextProcess = MainMenu;
                         }
@@ -118,7 +127,7 @@ namespace ConsoleClient
                         Console.Clear();
                     }
 
-                    ProcessController(5,
+                    ProcessController(6,
                         "1. Create reports for the sales of each product for given period in JSON format. \n\nDo You want create report? /yes (Y) or no (N)/: ",
                         ref nextProcess,
                         delegate(string directory, DateTime starDate, DateTime endDate)
@@ -129,21 +138,21 @@ namespace ConsoleClient
                         "Enter repository's directory",
                         ReportMenu);
 
-                    ProcessController(6,
+                    ProcessController(7,
                         "2. Report in XML format holding the sales by vendor for given period. \n\nDo You want create report? /yes (Y) or no (N)/: ",
                         ref nextProcess,
                         Controller.MsSqlToXml,
                         "Enter file name: ",
                         ReportMenu);
 
-                    ProcessController(7,
+                    ProcessController(8,
                         "3. Reports summarizing the sales information for given period to PDF format. \n\nDo You want create report? /yes (Y) or no (N)/: ",
                         ref nextProcess,
                         Controller.MsSqlToPdf,
                         "Enter file name: ",
                         ReportMenu);
 
-                    ProcessController(8,
+                    ProcessController(9,
                         "4. Financial results report to Excel file \n\nDo You want create report? /yes (Y) or no (N)/: ",
                         ref nextProcess,
                         Controller.SqliteMySqlToExcel,

@@ -102,7 +102,7 @@
       <Name>XmlSalesReport</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZipFiles\ZipFiles.csproj">
-      <Project>{66FF0951-A549-4535-BFD1-62455790D60D}</Project>
+      <Project>{66ff0951-a549-4535-bfd1-62455790d60d}</Project>
       <Name>ZipFiles</Name>
     </ProjectReference>
   </ItemGroup>

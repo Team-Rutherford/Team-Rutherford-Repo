@@ -1,21 +1,15 @@
-﻿using MySqlDatabase;
-using XlsxFinancialReport;
-using ZipExcelExtractor;
-
-namespace MarketSystemController
+﻿namespace MarketSystemController
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using MarketSystemModel;
     using OracleDatabase;
     using MongoDbDatabase;
     using MsSqlDatabase;
     using XMLImport;
     using XmlSalesReport;
 	using PDFSalesReport;
+    using MySqlDatabase;
+    using XlsxFinancialReport;
+    using ZipExcelExtractor;
 
     public static class Controller
     {

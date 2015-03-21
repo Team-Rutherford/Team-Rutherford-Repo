@@ -21,6 +21,8 @@
     using SqLiteDatabase;
     using XlsxFinancialReport;
     using MsSqlDatabase.Migrations;
+    using PDFSalesReport;
+    using ZipExcelExtractor;
 
 
     class TestingMainClass
@@ -73,8 +75,30 @@
 
             // :::::::::::::  XLSX REPORT ::::::::::::::
 
-            XlsxManager.FinancialReportByVendor(@"C:\Users\Jazzy\Documents\GitHub\Team-Rutherford-Repo\Reports\rep3.xlsx");
+            // XlsxManager.FinancialReportByVendor(@"C:\Users\Jazzy\Documents\GitHub\Team-Rutherford-Repo\Reports\rep3.xlsx");
+            //XlsxManager.FinancialReportByVendor();
 
+            // :::::::::::::  PDF REPORT ::::::::::::::
+
+            //Null test
+            //DateTime startDate = DateTime.Parse("2016-07-22");
+            //DateTime endDate = DateTime.Parse("2016-02-15");
+
+            //Only one result test
+            // DateTime startDate = DateTime.Parse("2014-07-22");
+            // DateTime endDate = DateTime.Parse("2014-07-22");
+
+            //Normal test
+            //DateTime startDate = DateTime.Parse("2014-07-22");
+            //DateTime endDate = DateTime.Parse("2015-02-15");
+
+            // var pdfData = DbManager.GetSalesForPeriod(startDate, endDate);
+            // PDFSalesReport.PdfAggregatedSalesReport.PdfSaleReportForPeriod("PDF-Rreport", pdfData);
+
+            // ::::::::::::::: ZIP ARCHIVE ::::::::::::::::::::::::
+
+            Extractor extractor = new Extractor("..\\..\\");
+            var sample = extractor.GetData();
         }
    }
 }

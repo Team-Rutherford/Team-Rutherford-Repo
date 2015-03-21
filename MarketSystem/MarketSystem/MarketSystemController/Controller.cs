@@ -1,17 +1,15 @@
 ﻿namespace MarketSystemController
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using MarketSystemModel;
     using OracleDatabase;
     using MongoDbDatabase;
     using MsSqlDatabase;
     using XMLImport;
     using XmlSalesReport;
 	using PDFSalesReport;
+    using MySqlDatabase;
+    using XlsxFinancialReport;
+    using ZipExcelExtractor;
 
     public static class Controller
     {
@@ -24,8 +22,9 @@
 
         public static void ZipExcelToMsSql(string fileName)
         {
-            // TODO
-            throw new NotImplementedException();
+            var zipTransmiter = new Extractor(fileName);
+            var data = zipTransmiter.GetData();
+            DbManager.SaveData(data);
         }
 
         public static void XmlToMsSql(string pathToExpensesReport)
@@ -62,14 +61,13 @@
 
         public static void MsSqlToMySql()
         {
-            // TODO
-            throw new NotImplementedException();
+            var data = DbManager.LoadData();
+            MySQLDbManager.SaveData(data);
         }
 
-        public static void SqliteMySqlToExcel()
+        public static void SqliteMySqlToExcel(string fileName)
         {
-            // TODO
-            throw new NotImplementedException();
+            XlsxManager.FinancialReportByVendor(fileName);
         }
     }
 }

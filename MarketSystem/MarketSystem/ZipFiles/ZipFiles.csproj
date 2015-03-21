@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{574A8588-7178-4036-B818-8682D6BC37C6}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{66FF0951-A549-4535-BFD1-62455790D60D}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MarketSystemController</RootNamespace>
-    <AssemblyName>MarketSystemController</AssemblyName>
+    <RootNamespace>ZipFiles</RootNamespace>
+    <AssemblyName>ZipFiles</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -37,6 +39,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -46,10 +49,29 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Excel">
+      <HintPath>ExcelDLL\Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelLibrary">
+      <HintPath>..\..\..\..\..\..\OOP\ExcelLibrary_20110730\ExcelLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.Excel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,57 +79,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller.cs" />
+    <Compile Include="Extractor.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\MarketSystemModel\MarketSystemModel.csproj">
-      <Project>{3DA24B12-FE85-4B23-8E26-AB9482A4305B}</Project>
+      <Project>{3da24b12-fe85-4b23-8e26-ab9482a4305b}</Project>
       <Name>MarketSystemModel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MongoDbDatabase\MongoDbDatabase.csproj">
-      <Project>{377a66f7-c097-46cd-928b-f10b71a25ca8}</Project>
-      <Name>MongoDbDatabase</Name>
     </ProjectReference>
     <ProjectReference Include="..\MsSqlDatabase\MsSqlDatabase.csproj">
       <Project>{4225fc75-b7fe-423a-b4ff-59c51143e8d7}</Project>
       <Name>MsSqlDatabase</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MySqlDatabase\MySqlDatabase.csproj">
-      <Project>{bdaba127-b934-400e-9a5f-3ba283aa9e28}</Project>
-      <Name>MySqlDatabase</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OracleDatabase\OracleDatabase.csproj">
-      <Project>{6ACE6F73-DD8E-456E-ABAF-A383F9762E49}</Project>
-      <Name>OracleDatabase</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PDFSalesReport\PDFSalesReport.csproj">
-      <Project>{ed91224d-fc4e-4271-946c-df7584e92dc8}</Project>
-      <Name>PDFSalesReport</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SqLiteDatabase\SqLiteDatabase.csproj">
-      <Project>{69335681-f8b3-484b-8b05-78c567093084}</Project>
-      <Name>SqLiteDatabase</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XlsxFinancialReport\XlsxFinancialReport.csproj">
-      <Project>{1e98a500-f37b-4ba5-a746-201398521649}</Project>
-      <Name>XlsxFinancialReport</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XMLImport\XmlImport.csproj">
-      <Project>{0cfc9602-99aa-4f40-9394-7014a8c73dab}</Project>
-      <Name>XmlImport</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XmlSalesReport\XmlSalesReport.csproj">
-      <Project>{D8F0BD50-454C-4907-B90A-73500376A07A}</Project>
-      <Name>XmlSalesReport</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ZipFiles\ZipFiles.csproj">
-      <Project>{66ff0951-a549-4535-bfd1-62455790d60d}</Project>
-      <Name>ZipFiles</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

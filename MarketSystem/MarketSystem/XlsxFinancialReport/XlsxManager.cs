@@ -18,13 +18,13 @@ namespace XlsxFinancialReport
 {
     public class XlsxManager
     {
-        public static void FinancialReportByVendor()
+        public static void FinancialReportByVendor(string printFilePath)
         {
             List<VendorReportContainer> reports = FillVendorReports();
-            PrintFinancialReportByVendor(reports);
+            PrintFinancialReportByVendor(reports, printFilePath);
         }
 
-        public static void PrintFinancialReportByVendor(List<VendorReportContainer> reportsData)
+        public static void PrintFinancialReportByVendor(List<VendorReportContainer> reportsData, string printFilePath)
         {
             using (ExcelPackage p = new ExcelPackage())
             {
@@ -43,17 +43,19 @@ namespace XlsxFinancialReport
                 var taxsesHeadCell = workSheet.Cells[1, 4];
                 var financialResultHead = workSheet.Cells[1, 5];
 
+                // Header cells text
                 vendorHeadCell.Value = "Vendor";
                 incomesHeadCell.Value = "Incomes";
                 expensesHeadCell.Value = "Expenses";
                 taxsesHeadCell.Value = "Total Taxes";
                 financialResultHead.Value = "Financial Result";
 
-                var headerCells = workSheet.Cells[1, 1, 1, 5].Style;
+                // Header cells style
+                var headerCells = workSheet.Cells[1, 1, 1, 5].Style;                
                 headerCells.WrapText = true;
                 headerCells.VerticalAlignment = ExcelVerticalAlignment.Center;
                 headerCells.Indent = 1;
-                headerCells.Font.SetFromFont(new Font("Calibri", 11, FontStyle.Bold));
+                headerCells.Font.SetFromFont(new Font("Calibri", 10, FontStyle.Bold));
                 headerCells.Font.Color.SetColor(Color.Black);
                 headerCells.Fill.PatternType = ExcelFillStyle.Solid;
                 headerCells.Fill.BackgroundColor.SetColor(Color.LightGray);
@@ -81,11 +83,11 @@ namespace XlsxFinancialReport
                     var expensesCell = workSheet.Cells[dataRowIndex, expensesColIndex];
                     expensesCell.Value = report.Expenses;
 
-                    // Expenses
+                    // Taxses
                     var taxsesCell = workSheet.Cells[dataRowIndex, taxesColIndex];
                     taxsesCell.Value = report.TotalTaxes;
 
-                    // Expenses
+                    // Financial Result
                     var financialResultCell = workSheet.Cells[dataRowIndex, financialResultColIndex];
                     financialResultCell.Value = report.FinancialResult;
 
@@ -94,14 +96,22 @@ namespace XlsxFinancialReport
                     financialResultCellStyle.Color.SetColor(Color.Black);
 
                     dataRowIndex++;
-                }              
+                }          
+    
                 // Adjust column width
                 int maxLength = reportsData.Select(d => d.Vendor.Name).Max(n => n.Count(c => char.IsLetterOrDigit(c)));
                 workSheet.Column(vendorColIndex).Width = maxLength + 2;
+                
+                // Set all borders
+                var wholeTable = workSheet.Cells[1, 1, dataRowIndex - 1, 5].Style;
+                wholeTable.Border.Left.Style = ExcelBorderStyle.Thin;
+                wholeTable.Border.Top.Style = ExcelBorderStyle.Thin;
+                wholeTable.Border.Right.Style = ExcelBorderStyle.Thin;
+                wholeTable.Border.Bottom.Style = ExcelBorderStyle.Thin;
 
                 // Save the Excel file
                  Byte[] bin = p.GetAsByteArray();
-                 File.WriteAllBytes(@"C:\Users\Jazzy\Documents\GitHub\Team-Rutherford-Repo\Reports\FinancialReportByVendor.xlsx", bin);
+                 File.WriteAllBytes(printFilePath, bin);
             }
         }
 
@@ -136,7 +146,7 @@ namespace XlsxFinancialReport
                 saleIncomes = MySQLDbManager.IncomesByProduct(product);
                 currentTax = SqLiteManager.TaxPercentage(product);
 
-                taxes += saleIncomes * currentTax;
+                taxes += (saleIncomes * currentTax);
             }
 
             return taxes;
@@ -157,21 +167,8 @@ namespace XlsxFinancialReport
 
         private static double CalculateTotalVendorIncomes(Vendor vendor)
         {
-            double incomes = 0;
-            var mySqlDb = new MySQLMarketContext();
-            var allProducts = mySqlDb.Products.Where(p => p.Vendor.Id == vendor.Id);
-            var sales = mySqlDb.Sales.Select(s => new { ProductId = s.ProductId, Quantity = s.Quantity }).ToList();
-            List<double> quantityes = new List<double>(); 
-
-            foreach (var product in allProducts)
-            {
-                quantityes = sales.Where(s => s.ProductId == product.Id).Select(s => s.Quantity).ToList();
-
-                if (quantityes.Count > 0)
-                {
-                    incomes = quantityes.Aggregate((a, b) => a + b) * product.Price;
-                }   
-            }           
+            var allProducts =  MySQLDbManager.ProductsByVendor(vendor);
+            double incomes = MySQLDbManager.TotalIncomesByProdustsList(allProducts);
 
             return incomes;
         }

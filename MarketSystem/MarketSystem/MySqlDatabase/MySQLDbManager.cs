@@ -113,8 +113,6 @@ namespace MySqlDatabase
                 result = saledPrdQuantity.Aggregate((a, b) => a + b);
             }
 
-            double productPrice = mySqlDb.Products.Where(p => p.Id == product.Id).Select(p => p.Price).FirstOrDefault();
-
             return result;
         }
 
@@ -141,6 +139,19 @@ namespace MySqlDatabase
         {
            var vendors = new MySQLMarketContext().Vendors.ToList();
            return vendors;
+        }
+
+        public static double TotalIncomesByProdustsList(List<Product> products)
+        {
+            var mySqlDb = new MySQLMarketContext();           
+            double quantity = 0;
+
+            foreach (var product in products)
+            {
+                quantity += IncomesByProduct(product);
+            }
+
+            return quantity;             
         }
     }
 }

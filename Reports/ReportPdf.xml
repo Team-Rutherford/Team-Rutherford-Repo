@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sales>
+  <sale vendor="Supermarket &quot;Bay Ivan&quot; - Zmeyovo">
+    <summary date="14-Jul-2014" total-sum="453.10" />
+    <summary date="14-Jul-2014" total-sum="453.10" />
+    <summary date="14-Jul-2014" total-sum="453.10" />
+  </sale>
+  <sale vendor="Supermarket &quot;Bourgas-Plaza&quot;">
+    <summary date="14-Jul-2014" total-sum="387.71" />
+    <summary date="14-Jul-2014" total-sum="387.71" />
+    <summary date="14-Jul-2014" total-sum="387.71" />
+  </sale>
+  <sale vendor="Supermarket &quot;Kaspichan - Center&quot;">
+    <summary date="14-Jul-2014" total-sum="558.30" />
+    <summary date="14-Jul-2014" total-sum="558.30" />
+    <summary date="14-Jul-2014" total-sum="558.30" />
+  </sale>
+  <sale vendor="Supermarket &quot;Plovdiv - Stolipinovo&quot;">
+    <summary date="14-Jul-2014" total-sum="915.12" />
+    <summary date="14-Jul-2014" total-sum="915.12" />
+    <summary date="14-Jul-2014" total-sum="915.12" />
+  </sale>
+</sales>

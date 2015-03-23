@@ -164,7 +164,7 @@ namespace ConsoleClient
                     ProcessController(9,
                         "4. Financial results report to Excel file \n\nDo You want create report? /yes (Y) or no (N)/: ",
                         ref nextProcess,
-                        Controller.SqliteMySqlToExcel,
+                        Controller.SqliteMySqlToXlsx,
                         "Enter file name: ",
                         ReportMenu);
                 }

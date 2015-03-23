@@ -7,6 +7,7 @@
     using System.Globalization;
     using System.Threading;
     using System.Xml;
+    using MsSqlDatabase;
 
     public class XmlVendorExpensesImport : MarketData, ITransmitter
     {
@@ -36,8 +37,12 @@
             foreach (XmlNode vendorNode in vendorsList)
             {
                 var vendorName = vendorNode.Attributes.GetNamedItem("name").InnerText;
+                var dbVendor = DbManager.GetVendorByName(vendorName);
                 var vendor = new Vendor();
-                vendor.Name = vendorName;
+                vendor.Name = dbVendor.Name;
+                vendor.Id = dbVendor.Id;
+                
+               
 
                 var expenses = vendorNode.ChildNodes;
                 foreach (XmlNode expense in expenses)
@@ -49,7 +54,7 @@
 
                     // create expense report by collected data
                     var exp = new VendorExpenses();
-                    exp.Vendor = vendor;
+                    exp.VendorId = vendor.Id;
                     exp.Date = parsedDate;
                     exp.Expenses = expenseMoney;
                     this.VendorExpenses.Add(exp);

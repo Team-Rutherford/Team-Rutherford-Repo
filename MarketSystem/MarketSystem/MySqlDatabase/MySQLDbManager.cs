@@ -16,36 +16,8 @@ namespace MySqlDatabase
         {
             try
             {               
-                var db = new MySQLMarketContext();
-
-                var newVendorIds = marketData.Vendors.Select(v => v.Id).ToList()
-               .Except(db.Vendors.Select(ve => ve.Id).ToList()).ToList();
-                var newVendorEntityes = marketData.Vendors.Where(x => newVendorIds.Contains(x.Id)).ToList();
-                db.Vendors.AddRange(newVendorEntityes);
-
-                var newSupermarketsId = marketData.Supermarkets.Select(v => v.Id).ToList()
-                    .Except(db.Supermarkets.Select(ve => ve.Id).ToList()).ToList();
-                var newSupermarketsEntityes = marketData.Supermarkets.Where(x => newSupermarketsId.Contains(x.Id)).ToList();
-                db.Supermarkets.AddRange(newSupermarketsEntityes);
-
-                var newMeasuresId = marketData.Measures.Select(v => v.Id).ToList()
-                    .Except(db.Measures.Select(ve => ve.Id).ToList()).ToList();
-                var newMeasuresEntityes = marketData.Measures.Where(x => newMeasuresId.Contains(x.Id)).ToList();
-                db.Measures.AddRange(newMeasuresEntityes);
-
-                var newProductsId = marketData.Products.Select(v => v.Id).ToList()
-                    .Except(db.Products.Select(ve => ve.Id).ToList()).ToList();
-                var newProductsEntityes = marketData.Products.Where(x => newProductsId.Contains(x.Id)).ToList();
-                db.Products.AddRange(newProductsEntityes);
-
-                var newSales = SaleDuplicateChecker(marketData.Sales, db);
-                db.Sales.AddRange(newSales);
-
-                var newVendorExpenses = ExpenseDuplicateChacker(marketData.VendorExpenses, db);
-                db.VendorExpenses.AddRange(newVendorExpenses);
-
+                var db = FilterNewEntries(marketData);
                 db.SaveChanges();
-
             }
             catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
             {
@@ -53,8 +25,44 @@ namespace MySqlDatabase
             }
             catch (MySql.Data.MySqlClient.MySqlException mySqlEx)
             {
+                var db = FilterNewEntries(marketData);
+                db.SaveChanges();
             }
         }
+
+        private static DbContext FilterNewEntries(IMarketData marketData)
+        {
+            var db = new MySQLMarketContext();
+
+            var newVendorIds = marketData.Vendors.Select(v => v.Id).ToList()
+           .Except(db.Vendors.Select(ve => ve.Id).ToList()).ToList();
+            var newVendorEntityes = marketData.Vendors.Where(x => newVendorIds.Contains(x.Id)).ToList();
+            db.Vendors.AddRange(newVendorEntityes);
+
+            var newSupermarketsId = marketData.Supermarkets.Select(v => v.Id).ToList()
+                .Except(db.Supermarkets.Select(ve => ve.Id).ToList()).ToList();
+            var newSupermarketsEntityes = marketData.Supermarkets.Where(x => newSupermarketsId.Contains(x.Id)).ToList();
+            db.Supermarkets.AddRange(newSupermarketsEntityes);
+
+            var newMeasuresId = marketData.Measures.Select(v => v.Id).ToList()
+                .Except(db.Measures.Select(ve => ve.Id).ToList()).ToList();
+            var newMeasuresEntityes = marketData.Measures.Where(x => newMeasuresId.Contains(x.Id)).ToList();
+            db.Measures.AddRange(newMeasuresEntityes);
+
+            var newProductsId = marketData.Products.Select(v => v.Id).ToList()
+                .Except(db.Products.Select(ve => ve.Id).ToList()).ToList();
+            var newProductsEntityes = marketData.Products.Where(x => newProductsId.Contains(x.Id)).ToList();
+            db.Products.AddRange(newProductsEntityes);
+
+            var newSales = SaleDuplicateChecker(marketData.Sales, db);
+            db.Sales.AddRange(newSales);
+
+            var newVendorExpenses = ExpenseDuplicateChacker(marketData.VendorExpenses, db);
+            db.VendorExpenses.AddRange(newVendorExpenses);
+
+            return db;
+        }
+
 
         private static List<Sale> SaleDuplicateChecker(ICollection<Sale> newSales, MySQLMarketContext db)
         {
@@ -69,8 +77,8 @@ namespace MySqlDatabase
                 if (!exists)
                 {
                     result.Add( new Sale() { Id = newSale.Id,
-                        ProductId = newSale.ProductId,
-                        SupermarketId = newSale.SupermarketId,
+                        ProductId = newSale.Product.Id,
+                        SupermarketId = newSale.Supermarket.Id,
                         Quantity = newSale.Quantity,
                         Date = newSale.Date
                     });
@@ -86,7 +94,7 @@ namespace MySqlDatabase
             {
                 List<VendorExpenses> oldExpense = db.VendorExpenses.ToList();
                 bool existInDatabase = oldExpense.Any(x => (x.Date.Date == newExpense.Date.Date) &&
-                                                     (x.VendorId == x.VendorId));
+                                                     (x.VendorId == newExpense.VendorId));
                 if (!existInDatabase)
                 {
                     result.Add( new VendorExpenses() 

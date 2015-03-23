@@ -6,28 +6,43 @@ using System.IO;
 using System.IO.Compression;
 using System.Reflection;
 using MarketSystemModel;
+using MsSqlDatabase;
 using Excel;
+using OfficeOpenXml;
+using System.Xml;
+using System.Xml.XPath;
+using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace ZipExcelExtractor
 {
     public class Extractor : MarketData, ITransmitter
     {
         private const string FileForExtract = "Reports";
-        private string pathToArchive;
+        private string pathToArchive = @"..\..\..\..\..\DataFiles\";
         private string archiveName = "sample-reports.zip";
-        public Extractor(string pathToArchive)
+        private string fullPathToZipArchive;
+        public Extractor(string PathToZipSalesReport)
         {
-            this.pathToArchive = pathToArchive;
+            this.fullPathToZipArchive = PathToZipSalesReport;
         }
+
         public string ArchiveName
         {
             get { return this.archiveName; }
             set { this.archiveName = value; }
         }
+
         public IMarketData GetData()
         {
-            ZipFile.ExtractToDirectory(this.pathToArchive + this.ArchiveName, this.pathToArchive + FileForExtract);
-            var allFolders = Directory.GetDirectories(this.pathToArchive + FileForExtract);
+            if (Directory.Exists(FileForExtract))
+            {
+                Directory.Delete(FileForExtract, true);
+            }
+
+            ZipFile.ExtractToDirectory(fullPathToZipArchive, FileForExtract);
+            var allFolders = Directory.GetDirectories(FileForExtract);          
+
             foreach (var folder in allFolders)
             {
                 var folderName = Path.GetFileName(folder);
@@ -36,9 +51,12 @@ namespace ZipExcelExtractor
                 {
                     foreach (var worksheet in Workbook.Worksheets(file))
                     {
+
+                        var dbSupermaket = DbManager.GetSupermarketByName(worksheet.Rows[0].Cells[1].Text);
                         var supermarket = new Supermarket
                         {
-                            Name = worksheet.Rows[0].Cells[1].Text
+                            Id = dbSupermaket.Id,
+                            Name = dbSupermaket.Name                                          
                         };
                         for (int r = 0; r < worksheet.Rows.Length; r++)
                         {
@@ -58,9 +76,14 @@ namespace ZipExcelExtractor
                                 {
                                     if (c == 1)
                                     {
+                                        Product dbProduct = DbManager.GetProductByName(row.Cells[c].Text);
                                         var product = new Product
                                         {
-                                            Name = row.Cells[c].Text
+                                            Id = dbProduct.Id,
+                                            Name = dbProduct.Name,
+                                            Price = dbProduct.Price,
+                                            MeasureId = dbProduct.MeasureId,
+                                            VendorId = dbProduct.VendorId
                                         };
                                         sale.Product = product;
                                     }
@@ -83,9 +106,9 @@ namespace ZipExcelExtractor
                     }
                 }
             }
-            if (Directory.Exists(this.pathToArchive + FileForExtract))
+            if (Directory.Exists(FileForExtract))
             {
-                Directory.Delete(this.pathToArchive + FileForExtract, true);
+                Directory.Delete(FileForExtract, true);
             }
             //Console.WriteLine("Importing finised successfully");
             return this;

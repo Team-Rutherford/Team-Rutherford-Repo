@@ -43,11 +43,18 @@ namespace MsSqlDatabase
                 var newSales = SaleDuplicateChecker(marketData.Sales);
                 db.Sales.AddRange(newSales);
 
+                var newExpenses = ExpenseDuplicateChecker(marketData.VendorExpenses);
+                db.VendorExpenses.AddRange(newExpenses);
+
                 db.SaveChanges();
             }
             catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
             {
                 var a = ex;
+            }
+            catch (Exception exe)
+            {
+                var a = exe;
             }
         }
 
@@ -63,16 +70,40 @@ namespace MsSqlDatabase
         private static ICollection<Sale> SaleDuplicateChecker(ICollection<Sale> newSales)
         {
             var db = new DbMarketContext();
-            var result = new List<Sale>(){};
+            var salesToAdd = new List<Sale>(){};
             foreach (var newSale in newSales)
             {       
                 var existInDatabase = db.Sales.Any(s => (s.Date == newSale.Date) &&
                                                   (s.Supermarket.Name == newSale.Supermarket.Name) &&
-                                                  (s.ProductId == newSale.ProductId)).ToString();
+                                                  (s.Product.Name == newSale.Product.Name)).ToString();
                 if (existInDatabase == "False")
                 {
-                    result.Add(newSale);
+                    Sale sale = new Sale()
+                    {
+                        ProductId = newSale.Product.Id,
+                        SupermarketId = newSale.Supermarket.Id,
+                        Quantity = newSale.Quantity,
+                        Date = newSale.Date
+                    };
+                    salesToAdd.Add(sale);
                 }                
+            }
+
+            return salesToAdd;
+        }
+
+        private static ICollection<VendorExpenses> ExpenseDuplicateChecker(ICollection<VendorExpenses> newVendorExpenses)
+        {
+            var db = new DbMarketContext();
+            var result = new List<VendorExpenses>() { };
+            foreach (var newExpense in newVendorExpenses)
+            {
+                var existInDatabase = db.VendorExpenses.Any(s => (s.Date == newExpense.Date) &&
+                                                  (s.VendorId == newExpense.VendorId)).ToString();
+                if (existInDatabase == "False")
+                {
+                    result.Add(newExpense);
+                }
             }
             return result;
         }
@@ -127,11 +158,11 @@ namespace MsSqlDatabase
             using (var MsDb = new DbMarketContext())
             {
                 MsDb.Measures.ForEachAsync(m => data.Measures.Add(m)).Wait();
-                MsDb.Products.ForEachAsync(p => data.Products.Add(p)).Wait();
+                MsDb.Products.ToList().ForEach(p => data.Products.Add(p));
                 MsDb.Sales.ForEachAsync(s => data.Sales.Add(s)).Wait();
                 MsDb.Supermarkets.ForEachAsync(sup => data.Supermarkets.Add(sup)).Wait();
                 MsDb.Vendors.ForEachAsync(v => data.Vendors.Add(v)).Wait();
-                MsDb.VendorExpanses.ForEachAsync(vs => data.VendorExpenses.Add(vs)).Wait();
+                MsDb.VendorExpenses.ForEachAsync(ve => data.VendorExpenses.Add(ve)).Wait();
             }    
 
 
@@ -163,6 +194,30 @@ namespace MsSqlDatabase
                 .ToList();
 
             return sales;
+        }
+
+        public static Supermarket GetSupermarketByName(string name)
+        {
+            var db = new DbMarketContext();
+            Supermarket supermarket = db.Supermarkets.Where(s => s.Name.Equals(name)).FirstOrDefault();
+
+            return supermarket;
+        }
+
+        public static Product GetProductByName(string name)
+        {
+            var db = new DbMarketContext();
+            Product product = db.Products.Where(p => p.Name.Equals(name)).FirstOrDefault();
+
+            return product;
+        }
+
+        public static Vendor GetVendorByName(string name)
+        {
+            var db = new DbMarketContext();
+            Vendor vendor = db.Vendors.Where(v => v.Name.Equals(name)).FirstOrDefault();
+
+            return vendor;
         }
     }
 }

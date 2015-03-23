@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<expenses-by-month>
+  <vendor name="Iablanska Halva corp.">
+    <expenses month="Jul-2013">30.00</expenses>
+    <expenses month="Aug-2013">40.00</expenses>
+  </vendor>
+  <vendor name="Kamenitza corp.">
+    <expenses month="Jul-2013">250.00</expenses>
+    <expenses month="Aug-2013">180.00</expenses>
+  </vendor>
+  <vendor name="Zagorka corp.">
+    <expenses month="Jul-2013">330.00</expenses>
+    <expenses month="Aug-2013">480.00</expenses>
+  </vendor>
+  <vendor name="Carlsberg Bulgaria corp.">
+    <expenses month="Jul-2013">370.00</expenses>
+    <expenses month="Aug-2013">120.00</expenses>
+  </vendor>
+  <vendor name="Boliarka BT corp.">
+    <expenses month="Jul-2013">500.00</expenses>
+    <expenses month="Aug-2013">220.00</expenses>
+  </vendor>
+  <vendor name="Burgaska Konserva corp.">
+    <expenses month="Jul-2013">440.00</expenses>
+    <expenses month="Aug-2013">180.00</expenses>
+  </vendor>
+  <vendor name="Dedo Stafid ET.">
+    <expenses month="Jul-2013">120.00</expenses>
+    <expenses month="Aug-2013">230.00</expenses>
+  </vendor>
+</expenses-by-month>

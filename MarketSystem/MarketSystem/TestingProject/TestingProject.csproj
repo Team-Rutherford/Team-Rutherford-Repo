@@ -118,6 +118,10 @@
       <Project>{1e98a500-f37b-4ba5-a746-201398521649}</Project>
       <Name>XlsxFinancialReport</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XMLImport\XmlImport.csproj">
+      <Project>{0cfc9602-99aa-4f40-9394-7014a8c73dab}</Project>
+      <Name>XmlImport</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XmlSalesReport\XmlSalesReport.csproj">
       <Project>{d8f0bd50-454c-4907-b90a-73500376a07a}</Project>
       <Name>XmlSalesReport</Name>

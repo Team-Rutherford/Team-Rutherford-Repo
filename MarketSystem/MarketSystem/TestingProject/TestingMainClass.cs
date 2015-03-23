@@ -23,6 +23,7 @@
     using MsSqlDatabase.Migrations;
     using PDFSalesReport;
     using ZipExcelExtractor;
+    using XMLImport;
 
 
     class TestingMainClass
@@ -75,8 +76,7 @@
 
             // :::::::::::::  XLSX REPORT ::::::::::::::
 
-            // XlsxManager.FinancialReportByVendor(@"C:\Users\Jazzy\Documents\GitHub\Team-Rutherford-Repo\Reports\rep3.xlsx");
-            //XlsxManager.FinancialReportByVendor();
+            XlsxManager.FinancialReportByVendor(@"..\..\..\..\..\Reports\rep.xlsx");
 
             // :::::::::::::  PDF REPORT ::::::::::::::
 
@@ -97,8 +97,14 @@
 
             // ::::::::::::::: ZIP ARCHIVE ::::::::::::::::::::::::
 
-            Extractor extractor = new Extractor("..\\..\\");
-            var sample = extractor.GetData();
+            //Extractor extractor = new Extractor(@"..\..\..\..\..\DataFiles\sales-reports.zip");
+            //var sample = extractor.GetData();
+            //DbManager.SaveData(sample);
+
+            // ::::::::::::::::::  XML INPORT :::::::::::::::::::::::
+            //XmlVendorExpensesImport importer = new XmlVendorExpensesImport(@"C:\Users\Jazzy\Documents\GitHub\Team-Rutherford-Repo\DataFiles\Vendor-Expenses.xml");
+            //var data = importer.GetData();
+            //DbManager.SaveData(data);
         }
    }
 }

@@ -230,14 +230,14 @@ BEGIN
 END;
 /
 /* ---------------------------- INSERT SUPERMARKETS --------------------------------------------- */
+INSERT INTO SUPERMARKETS(SUPERMARKET_NAME) 
+VALUES ('Supermarket "Bourgas-Plaza"');
 INSERT INTO SUPERMARKETS(SUPERMARKET_NAME)
-VALUES ('Bourgas – Plaza');
+VALUES ('Supermarket "Kaspichan - Center"');
 INSERT INTO SUPERMARKETS(SUPERMARKET_NAME)
-VALUES ('Kaspichan – Center');
+VALUES ('Supermarket "Bay Ivan" - Zmeyovo');
 INSERT INTO SUPERMARKETS(SUPERMARKET_NAME)
-VALUES ('Bay Ivan” – Zmeyovo');
-INSERT INTO SUPERMARKETS(SUPERMARKET_NAME)
-VALUES ('Plovdiv – Stolipinovo');
+VALUES ('Supermarket "Plovdiv - Stolipinovo"');
 
 /* ------------------------------ GREATE SALES -----------------------------------*/
 DROP TABLE SALES;

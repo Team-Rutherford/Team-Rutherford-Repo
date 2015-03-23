@@ -13,6 +13,8 @@
 
     public static class Controller
     {
+        private const string DataFolderPath = @"..\..\..\..\..\DataFiles\";
+        private const string ReportsFolderPath = @"..\..\..\..\..\Reports\";
         public static void OracleToMsSql()
         {
             var oracleTransmitter = new OracleTransmiter();
@@ -20,16 +22,16 @@
             DbManager.SaveData(data);
         }
 
-        public static void ZipExcelToMsSql(string fileName)
+        public static void ZipExcelToMsSql(string filename)
         {
-            var zipTransmiter = new Extractor(fileName);
+            var zipTransmiter = new Extractor(DataFolderPath + filename);
             var data = zipTransmiter.GetData();
             DbManager.SaveData(data);
         }
 
-        public static void XmlToMsSql(string pathToExpensesReport)
+        public static void XmlToMsSql(string filename)
         {
-            var xmlTransmitter = new XmlVendorExpensesImport(pathToExpensesReport);
+            var xmlTransmitter = new XmlVendorExpensesImport(DataFolderPath + filename);
             var data = xmlTransmitter.GetData();
             DbManager.SaveData(data);
         }
@@ -65,9 +67,9 @@
             MySQLDbManager.SaveData(data);
         }
 
-        public static void SqliteMySqlToExcel(string fileName)
+        public static void SqliteMySqlToXlsx(string filename)
         {
-            XlsxManager.FinancialReportByVendor(fileName);
+            XlsxManager.FinancialReportByVendor(DataFolderPath + filename);
         }
     }
 }

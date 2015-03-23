@@ -11,8 +11,10 @@ namespace ZipFiles
     {
         static void Main(string[] args)
         {
-            Extractor extractor = new Extractor("..\\..\\");
-            var sample = extractor.GetData();
+            //Extractor extractor = new Extractor(@"..\..\..\");
+            //Extractor extractor = new Extractor();
+            //var sample = extractor.GetData();
+
         }
     }
 }

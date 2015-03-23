@@ -47,6 +47,10 @@
       <Project>{3da24b12-fe85-4b23-8e26-ab9482a4305b}</Project>
       <Name>MarketSystemModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MsSqlDatabase\MsSqlDatabase.csproj">
+      <Project>{4225fc75-b7fe-423a-b4ff-59c51143e8d7}</Project>
+      <Name>MsSqlDatabase</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -60,7 +60,7 @@ namespace ConsoleClient
 
                 try
                 {
-                    if (nextProcess >= 1 && nextProcess <= 3)
+                    if (nextProcess >= 1 && nextProcess <= 4)
                     {
                         if (!isError)
                         {
@@ -72,7 +72,21 @@ namespace ConsoleClient
                         Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++++++");
                         Console.WriteLine();
                         Console.WriteLine("                Transfer Data ");
+                        Console.WriteLine(" 1. Data from Oracle database to MSSQL Database");
+                        Console.WriteLine(" 2. Data from Zip files to MSSQL Database");
+                        Console.WriteLine(" 3. Data from XML files to MSSQL database");
+                        Console.WriteLine(" 4. Data from MSSQL database to MySQL Database");
+                        Console.WriteLine(" 5. Exit");
                         Console.WriteLine();
+
+                        Console.Write("Choose number of report (1 - 5): ");
+                        nextProcess = int.Parse(Console.ReadLine());
+                        if (nextProcess == 5)
+                        {
+                            nextProcess = MainMenu;
+                        }
+
+                        Console.Clear();
                     }
 
                     ProcessController(1,
